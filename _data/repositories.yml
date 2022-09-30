@@ -1,12 +1,9 @@
 github_users:
-  - torvalds
-  - alshedivat
+  - mtcairneyleeming
 
 github_repos:
-  - alshedivat/al-folio
-  - twbs/bootstrap
-  - jekyll/jekyll
-  - jquery/jquery
-  - FortAwesome/Font-Awesome
-  - jpswalsh/academicons
-  - mathjax/MathJax
+  - mtcairneyleeming/fractals
+  - mtcairneyleeming/DocumentAnnotation
+  - p2titus/ContactTracing
+  - mtcairneyleeming/complex
+  - mtcairneyleeming/latin
