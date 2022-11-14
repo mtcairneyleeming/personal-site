@@ -2,20 +2,18 @@
   type: map
   contents:
     - name: Full Name
-      value: Albert Einstein
+      value: Max Cairney-Leeming
     - name: Date of Birth
-      value: 14th March 1879
-    - name: Languages
-      value: English, German
+      value: 19th January 2001
 
 - title: Education
   type: time_table
   contents:
-    - title: PhD
-      institution: University of Zurich, Zurich, Switzerland
-      year: 1905
+    - title: Masters in Mathematics and Computer Science
+      institution: University of Oxford
+      year: 2019-2023
       description:
-        - Description 1.
+        - test
         - Description 2.
         - title: Description 3.
           contents:
