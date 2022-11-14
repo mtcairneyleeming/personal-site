@@ -9,8 +9,7 @@ layout: default
             <p class="post-description">{{ page.description }}</p>
           </header>
 
-          <div>
-            <iframe src="{{ page.cv_pdf | prepend: 'assets/pdf/' | relative_url}}" frameborder="0" width="100%" height="60em"></iframe>
-          </div>
+          
+            <embed src="{{ page.cv_pdf | prepend: 'assets/pdf/' | relative_url}}" frameborder="0" style="width: 100%;  height: 100vh"></embed>
 
         </div>
