@@ -6,6 +6,7 @@ img: assets/img/latin.jpg
 redirect: https://docann.maxcl.co.uk/Annotate/View?docAnnId=3&book=10&section=215-259
 importance: 2
 category: work
+giscus_comments: true
 ---
 
 

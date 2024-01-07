@@ -6,6 +6,7 @@ img: assets/img/sierpinski.jpg
 redirect: https://fractals.maxcl.co.uk
 importance: 1
 category: work
+related_publications: einstein1956investigations, einstein1950meaning
 ---
 A website to genereate 3D printable models of fractals, using Lindenmayer-systems. Written to accompany two videos I made during my internship with Dr. Tom Crawford on his youtube channel [Tom Rocks Maths](https://tomrocksmaths.com/), aimed at students and the general public interested in maths.  The two videos are also embedded below
 
