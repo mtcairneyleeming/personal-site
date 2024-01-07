@@ -2,8 +2,9 @@ github_users:
   - mtcairneyleeming
 
 github_repos:
+  - mtcairneyleeming/4yp
   - mtcairneyleeming/fractals
   - mtcairneyleeming/DocumentAnnotation
-  - p2titus/ContactTracing
+#  - p2titus/ContactTracing
   - mtcairneyleeming/complex
   - mtcairneyleeming/latin

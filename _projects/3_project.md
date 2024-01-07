@@ -2,7 +2,7 @@
 layout: page
 title: Master's Project - working on PriorVAE 
 description: Open source code for my Master's project
-img: assets/img/priorvae.png
+img: assets/img/priorvae.jpg
 redirect: https://github.com/mtcairneyleeming/4yp
 importance: 3
 category: work
