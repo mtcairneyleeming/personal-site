@@ -47,7 +47,7 @@ params:
     profileMode:
           enabled: true
           title: Max Cairney-Leeming
-          subtitle: "I am a PhD Student at the Institute of Science and Technology Austria (ISTA), near-ish Vienna, under the supervision of Christoph Lampert. I am also a member of the ELLIS PhD Program, and so co-supervised by Amartya Sanyal at the University of Copenhagen."
+          subtitle: "I am a PhD Student at the Institute of Science and Technology Austria (ISTA), near-ish Vienna, under the supervision of Christoph Lampert. I work on Differential Privacy for (deep) Machine Learning, and am interested in the intersection between DP and other concerns about machine learning, e.g. fairness, and also in the tradeoff between privacy and achieving good utility, in terms of where different privacy definitions/frameworks  might find a different balance to what we have already. I am also a member of the ELLIS PhD Program, and so co-supervised by Amartya Sanyal at the University of Copenhagen."
           imageUrl: "me.jpg"
           imageWidth: 160
           imageHeight: 160
