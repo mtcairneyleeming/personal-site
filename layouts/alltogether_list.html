@@ -2,8 +2,7 @@
 
 {{- if (and site.Params.profileMode.enabled .IsHome) }}
 {{- partial "index_profile.html" . }}
-{{- end -}}
-{{/* else */}} {{/* if not profileMode */}}
+{{- else }} {{/* if not profileMode */}}
 
 {{- if not .IsHome | and .Title }}
 <header class="page-header">
@@ -27,7 +26,7 @@
 {{- $pages := union .RegularPages .Sections }}
 
 {{- if .IsHome }}
-{{- $pages = where site.RegularPages "Type" "in" site.Params.newsSections }}
+{{- $pages = where site.RegularPages "Type" "in" site.Params.mainSections }}
 {{- $pages = where $pages "Params.hiddenInHomeList" "!=" "true"  }}
 {{- end }}
 
@@ -40,13 +39,13 @@
 {{- $term := .Data.Term }}
 {{- range $index, $page := $paginator.Pages }}
 
-{{- $class := "post-entry" }}
+{{- $class := "post-entry no-post-link" }}
 
 {{- $user_preferred := or site.Params.disableSpecial1stPost site.Params.homeInfoParams }}
 {{- if (and $.IsHome (eq $paginator.PageNumber 1) (eq $index 0) (not $user_preferred)) }}
-{{- $class = "first-entry" }}
+{{- $class = "first-entry-no-link" }}
 {{- else if $term }}
-{{- $class = "post-entry tag-entry" }}
+{{- $class = "post-entry no-post-link tag-entry" }}
 {{- end }}
 
 <article class="{{ $class }}">
@@ -64,18 +63,43 @@
       </span>
       {{- end }}
     </h2>
+
+
+     {{- if not (.Param "hideMeta") }}
+    <div class="post-meta">
+      {{- partial "post_meta.html" . -}}
+      {{- partial "translation_list.html" . -}}
+      {{- partial "edit_post.html" . -}}
+      {{- partial "post_canonical.html" . -}}
+    </div>
+    {{- end }}
   </header>
-  {{- if (ne (.Param "hideSummary") true) }}
-  <div class="entry-content">
-    <p>{{ .Summary | plainify | htmlUnescape }}{{ if .Truncated }}...{{ end }}</p>
+ 
+  {{- if .Content }}
+  <div class="post-content">
+    {{- if not (.Param "disableAnchoredHeadings") }}
+    {{- partial "anchored_headings.html" .Content -}}
+    {{- else }}{{ .Content }}{{ end }}
   </div>
   {{- end }}
+    
   {{- if not (.Param "hideMeta") }}
   <footer class="entry-footer">
-    {{- partial "post_meta.html" . -}}
+     {{- $tags := .Language.Params.Taxonomies.tag | default "tags" }}
+    <ul class="post-tags">
+      {{- range ($.GetTerms $tags) }}
+      <li><a href="{{ .Permalink }}">{{ .LinkTitle }}</a></li>
+      {{- end }}
+    </ul>
+    {{- if (.Param "ShowPostNavLinks") }}
+    {{- partial "post_nav_links.html" . }}
+    {{- end }}
+    {{- if (and site.Params.ShowShareButtons (ne .Params.disableShare true)) }}
+    {{- partial "share_icons.html" . -}}
+    {{- end }}
   </footer>
   {{- end }}
-  <a class="entry-link" aria-label="post link to {{ .Title | plainify }}" href="{{ .Permalink }}"></a>
+  <!-- <a class="entry-link" aria-label="post link to {{ .Title | plainify }}" href="{{ .Permalink }}"></a> -->
 </article>
 {{- end }}
 
@@ -102,6 +126,6 @@
 </footer>
 {{- end }}
 
-{{/*- end */}}{{/* end profileMode */}}
+{{- end }}{{/* end profileMode */}}
 
 {{- end }}{{- /* end main */ -}}
