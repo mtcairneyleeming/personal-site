@@ -1,6 +1,7 @@
 ---
-title: "Affiliated!"
+title: "Affiliated with the Lampert group"
 date: 2024-06-18
-summary: " have affiliated with Prof. Christoph Lampert at ISTA! Over the next few months, I’ll be working towards the qualifying exam (defending my PhD proposal)."
+hideAuthor: true
 ---
+I have officially joined the group of Prof. Christoph Lampert at ISTA.
 

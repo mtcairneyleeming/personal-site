@@ -2,15 +2,19 @@
 
 {{- if (and site.Params.profileMode.enabled .IsHome) }}
 {{- partial "index_profile.html" . }}
-{{- end -}}
-{{/* else */}} {{/* if not profileMode */}}
+{{- end }}
 
 {{- if not .IsHome | and .Title }}
 <header class="page-header">
   {{- partial "breadcrumbs.html" . }}
   <h1>
     {{- if (eq .Kind `term`) }}
-    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" stroke-width="2" fill="currentColor" class="bi bi-tag" viewBox="0 0 16 14"> <path d="M6 4.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm-1 0a.5.5 0 1 0-1 0 .5.5 0 0 0 1 0z"/> <path d="M2 1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 1 6.586V2a1 1 0 0 1 1-1zm0 5.586 7 7L13.586 9l-7-7H2v4.586z"/> </svg>&nbsp; {{ .Title }}
+    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" stroke-width="2" fill="currentColor"
+      class="bi bi-tag" viewBox="0 0 16 14">
+      <path d="M6 4.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm-1 0a.5.5 0 1 0-1 0 .5.5 0 0 0 1 0z" />
+      <path
+        d="M2 1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 1 6.586V2a1 1 0 0 1 1-1zm0 5.586 7 7L13.586 9l-7-7H2v4.586z" />
+    </svg>&nbsp; {{ .Title }}
     {{- end}}
   </h1>
 </header>
@@ -26,9 +30,12 @@
 
 {{- $pages := union .RegularPages .Sections }}
 
+{{ $GlobalIsHome := false}}
+
 {{- if .IsHome }}
 {{- $pages = where site.RegularPages "Type" "in" site.Params.newsSections }}
-{{- $pages = where $pages "Params.hiddenInHomeList" "!=" "true"  }}
+{{- $pages = where $pages "Params.hiddenInHomeList" "!=" "true" }}
+{{ $GlobalIsHome = true}}
 {{- end }}
 
 {{- $paginator := .Paginate $pages }}
@@ -49,6 +56,14 @@
 {{- $class = "post-entry tag-entry" }}
 {{- end }}
 
+
+{{- if .IsHome }}
+
+{{- $class = "post-entry-no-hover" }}
+{{- end }}
+
+
+
 <article class="{{ $class }}">
   {{- $isHidden := (.Param "cover.hiddenInList") | default (.Param "cover.hidden") | default false }}
   {{- partial "cover.html" (dict "cxt" . "IsSingle" false "isHidden" $isHidden) }}
@@ -65,17 +80,34 @@
       {{- end }}
     </h2>
   </header>
+
+  {{- if $GlobalIsHome}}
+  <div class="entry-content">
+    {{- if not (.Param "disableAnchoredHeadings") }}
+    {{- partial "anchored_headings.html" .Content -}}
+    {{- else }}{{ .Content }}{{ end }}
+  </div>
+
+  {{- else }}
   {{- if (ne (.Param "hideSummary") true) }}
   <div class="entry-content">
     <p>{{ .Summary | plainify | htmlUnescape }}{{ if .Truncated }}...{{ end }}</p>
   </div>
   {{- end }}
+  {{- end }}
+
+
+
   {{- if not (.Param "hideMeta") }}
   <footer class="entry-footer">
     {{- partial "post_meta.html" . -}}
   </footer>
   {{- end }}
+
+
+  {{- if (ne $GlobalIsHome true) }}
   <a class="entry-link" aria-label="post link to {{ .Title | plainify }}" href="{{ .Permalink }}"></a>
+  {{- end }}
 </article>
 {{- end }}
 

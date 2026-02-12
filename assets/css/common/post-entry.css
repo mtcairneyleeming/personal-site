@@ -47,6 +47,11 @@
     border: 2px solid var(--darkcolor);
 }
 
+.post-entry-no-hover:hover {
+
+    border: 2px solid var(--border);
+}
+
 .tag-entry .entry-cover {
     display: none;
 }
