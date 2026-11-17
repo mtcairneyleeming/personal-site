@@ -12,6 +12,9 @@ pagination:
 
 menu:
     main:
+        - name: Publications
+          url: publications/
+          weight: 2
         - name: Projects
           url: projects/
           weight: 3 
@@ -47,11 +50,13 @@ params:
     profileMode:
           enabled: true
           title: Max Cairney-Leeming
-          subtitle: "I am a PhD Student at the Institute of Science and Technology Austria (ISTA), near-ish Vienna, under the supervision of Christoph Lampert. I work on Differential Privacy for (deep) Machine Learning, and am interested in the intersection between DP and other concerns about machine learning, e.g. fairness, and also in the tradeoff between privacy and achieving good utility, in terms of where different privacy definitions/frameworks  might find a different balance to what we have already. I am also a member of the ELLIS PhD Program, and so co-supervised by Amartya Sanyal at the University of Copenhagen."
+          subtitle: "I am a PhD student at the Institute of Science and Technology Austria (ISTA), near Vienna, supervised by Christoph Lampert. I work on differential privacy for deep learning, and in particular on how privacy interacts with other trustworthiness concerns, such as fairness and worst-group performance. I also work on the theory of DP: what it guarantees against data reconstruction, and how it implies generalization. I am a member of the ELLIS PhD Program, co-supervised by Amartya Sanyal at the University of Copenhagen."
           imageUrl: "me.jpg"
           imageWidth: 160
           imageHeight: 160
           buttons:
+            - name: Publications
+              url: publications/
             - name: Projects
               url: projects/
             - name: Notes
@@ -68,9 +73,8 @@ params:
             #   url: https://en.wikipedia.org/wiki/Moritz-Maria_von_Igelfeld_(character)
 
     socialIcons:
-        # to do: write a new CV!
-        # - name: CV
-        #   url: cv.pdf
+        - name: CV
+          url: cv.pdf
         - name: Email
           url: mailto:max@cairneyleeming.co.uk
         # - name: Zoom

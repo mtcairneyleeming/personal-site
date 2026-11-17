@@ -1,0 +1,33 @@
+{{- /* Renders data/publications.yaml, grouped by type. Usage: {{< publications >}} */ -}}
+{{- $me := "M. Cairney-Leeming" -}}
+{{- $groups := slice
+  (dict "heading" "Preprints" "types" (slice "preprint"))
+  (dict "heading" "Journal and conference papers" "types" (slice "journal" "conference")) -}}
+{{- $shown := 0 -}}
+{{- range $group := $groups -}}
+{{- $pubs := where hugo.Data.publications "type" "in" $group.types -}}
+{{- if $pubs -}}
+{{- if gt $shown 0 }}
+<hr>
+{{- end }}
+{{- $shown = add $shown 1 }}
+<h4>{{ $group.heading }}</h4>
+{{- range $p := $pubs }}
+{{- $authors := slice -}}
+{{- range $a := $p.authors -}}
+{{- if eq $a $me -}}
+{{- $authors = $authors | append (printf "<strong>%s</strong>" $a) -}}
+{{- else -}}
+{{- $authors = $authors | append $a -}}
+{{- end -}}
+{{- end }}
+<p>
+  {{ delimit $authors ", " | safeHTML }}.<br>
+  <strong>{{ $p.title }}.</strong><br>
+  {{ if eq $p.type "preprint" }}{{ $p.venue }}{{ else }}<em>{{ $p.venue }}</em>{{ end }}, {{ $p.year }}.
+  <a href="{{ $p.link }}" target="_blank">[{{ if eq $p.type "preprint" }}arXiv{{ else }}paper{{ end }}]</a>
+  {{- with $p.arxiv }} <a href="{{ . }}" target="_blank">[arXiv]</a>{{ end }}
+</p>
+{{- end }}
+{{- end -}}
+{{- end -}}

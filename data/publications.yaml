@@ -1,0 +1,53 @@
+# Single source of publications for the website (content/publications.md, via the
+# `publications` shortcode) and the CVs (~/Personal/Admin/CVs/typst, copied by build.sh).
+#
+# Fields:
+#   year     publication year
+#   authors  list; "M. Cairney-Leeming" is bolded
+#   title
+#   type     preprint | journal | conference
+#   venue    shown as the link text; italicised unless type is preprint
+#   link     accepted papers: proceedings page; preprints: arXiv abstract page
+#   arxiv    optional extra arXiv link for accepted papers (website only)
+#   industry optional; false hides the paper from the industry CV
+# Order is the order shown (newest first).
+
+# TODO, when on arXiv: Sibson MI paper with Hossein.
+
+- year: 2026
+  authors: [M. Cairney-Leeming, S. Bombari, M. Mondelli]
+  title: A Sharp Transition in Data Reconstruction under Differential Privacy
+  type: preprint
+  venue: arXiv preprint
+  link: https://arxiv.org/abs/2609.37344
+
+- year: 2026
+  authors: [C. H. Lampert, M. Cairney-Leeming, H. Zakerinia]
+  title: "From Privacy to Generalization: Linear Max-Information Bounds for Differentially Private Learning Algorithms"
+  type: preprint
+  venue: arXiv preprint
+  link: https://arxiv.org/abs/2605.26222
+
+- year: 2026
+  authors: [M. Cairney-Leeming, A. Sanyal, C. H. Lampert]
+  title: Adaptive Sampling and Clipping for Private Worst-Case Group Optimization
+  type: preprint
+  venue: arXiv preprint
+  link: https://arxiv.org/abs/2602.10820
+
+- year: 2025
+  authors: [F. Montagna, M. Cairney-Leeming, D. Sridhar, F. Locatello]
+  title: Demystifying amortized causal discovery with transformers
+  type: journal
+  venue: Transactions on Machine Learning Research (TMLR)
+  link: https://openreview.net/forum?id=9Lgy7IGSfp
+  arxiv: https://arxiv.org/abs/2405.16924
+  industry: false
+
+- year: 2023
+  authors: [E. Semenova, P. Verma, M. Cairney-Leeming, A. Solin, S. Bhatt, S. Flaxman]
+  title: "PriorCVAE: scalable MCMC parameter inference with Bayesian deep generative modelling"
+  type: preprint
+  venue: arXiv preprint
+  link: https://arxiv.org/abs/2304.04307
+  industry: false
