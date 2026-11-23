@@ -15,12 +15,15 @@ menu:
         - name: Publications
           url: publications/
           weight: 2
-        - name: Projects
+        - name: Personal Projects
           url: projects/
-          weight: 3 
-        - name: Notes
+          weight: 3
+        - name: Assorted Notes
           url: notes/
           weight: 4
+        - name: Blog
+          url: blog/
+          weight: 5
 
 params:
     description: "This is Max Cairney-Leeming's personal website."
@@ -38,7 +41,7 @@ params:
     ShowBreadCrumbs: false
     ShowCodeCopyButtons: true
     ShowAllPagesInArchive: false
-    MainSections: ["projects","notes"]
+    MainSections: ["projects","notes","blog"]
     NewsSections: ["news"]
     ShowToc: false
     disableScrollToTop: true
@@ -57,10 +60,12 @@ params:
           buttons:
             - name: Publications
               url: publications/
-            - name: Projects
+            - name: Personal Projects
               url: projects/
-            - name: Notes
+            - name: Assorted Notes
               url: notes/
+            - name: Blog
+              url: blog/
             # - name: Books
             #   url: books/
             # - name: Courses
@@ -69,8 +74,6 @@ params:
             #   url: tags/
             # - name: Archive
             #   url: archive/
-            # - name: Blog
-            #   url: https://en.wikipedia.org/wiki/Moritz-Maria_von_Igelfeld_(character)
 
     socialIcons:
         - name: CV

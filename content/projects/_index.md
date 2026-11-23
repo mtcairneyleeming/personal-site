@@ -1,4 +1,4 @@
 ---
-title: "Projects"
+title: "Personal Projects"
 description: "Various projects I have created/worked upon"
 ---
