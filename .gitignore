@@ -2,3 +2,6 @@
 public/
 resources/
 .hugo_build.lock
+
+# Server command log: contains server details.
+ops/ssh-log.md
