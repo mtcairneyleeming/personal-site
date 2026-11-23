@@ -25,6 +25,12 @@
 
         {{- block "main" . }}{{ end }}
     </main>
+    <button class="handwriting-toggle" type="button" role="switch" aria-checked="false" hidden>
+        <span class="handwriting-track" aria-hidden="true"></span>
+        <span>Handwriting</span>
+        <span class="handwriting-demo-badge" hidden>Demo</span>
+    </button>
+    <script defer src="{{ "js/handwriting.js" | relURL }}" data-manifest="{{ "handwriting/ink.json" | relURL }}"></script>
     {{ partialCached "footer.html" . .Layout .Kind (.Param "hideFooter") (.Param "ShowCodeCopyButtons") -}}
 </body>
 </html>

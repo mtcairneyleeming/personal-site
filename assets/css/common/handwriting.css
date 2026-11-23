@@ -1,0 +1,137 @@
+.handwriting-toggle:not([hidden]) {
+    position: fixed;
+    inset-block-start: max(6px, env(safe-area-inset-top));
+    inset-inline-end: max(8px, env(safe-area-inset-right));
+    z-index: 10;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-block-size: 32px;
+    padding: 4px 8px;
+    background: var(--theme);
+    color: var(--primary);
+    border: 1px solid var(--tertiary);
+    border-radius: 999px;
+    box-shadow: 0 2px 8px rgb(0 0 0 / 12%);
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.handwriting-toggle:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
+
+.handwriting-track {
+    display: inline-flex;
+    align-items: center;
+    inline-size: 28px;
+    block-size: 16px;
+    padding-inline: 2px;
+    border: 1px solid var(--secondary);
+    border-radius: 999px;
+    background: var(--tertiary);
+}
+
+.handwriting-track::before {
+    content: "";
+    inline-size: 10px;
+    block-size: 10px;
+    border: 1px solid var(--secondary);
+    border-radius: 50%;
+    background: var(--theme);
+}
+
+.handwriting-toggle[aria-checked="true"] .handwriting-track {
+    justify-content: end;
+    background: var(--darkcolor);
+}
+
+.handwriting-demo-badge {
+    color: var(--secondary);
+    font-size: 10px;
+}
+
+body:has(.handwriting-toggle:not([hidden])) .nav {
+    padding-inline-end: 152px;
+}
+
+@media (max-width: 760px) {
+    body:has(.handwriting-toggle:not([hidden])) .nav {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 152px;
+        padding-inline-end: 0;
+    }
+
+    body:has(.handwriting-toggle:not([hidden])) #menu {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (max-width: 380px) {
+    body:has(.handwriting-toggle:not([hidden])) .nav {
+        grid-template-columns: minmax(0, 1fr) 126px;
+    }
+
+    body:has(.handwriting-toggle:not([hidden])) .logo a {
+        font-size: 13px;
+    }
+
+    .handwriting-demo-badge:not([hidden]) {
+        position: absolute;
+        inset-block-start: 100%;
+        inset-inline-end: 5px;
+    }
+}
+
+.handwriting-visual {
+    display: none;
+}
+
+@media screen and (forced-colors: none) {
+    .handwriting-word {
+        position: relative;
+        display: inline-block;
+        max-inline-size: 100%;
+        vertical-align: baseline;
+    }
+
+    .handwriting-original {
+        position: absolute;
+        inset: 0;
+        color: transparent;
+        overflow: hidden;
+    }
+
+    .handwriting-original::selection {
+        color: var(--primary);
+        background: var(--lightcolor);
+    }
+
+    .handwriting-word .handwriting-visual {
+        display: inline;
+        pointer-events: none;
+        user-select: none;
+    }
+
+    img.handwriting-visual {
+        max-inline-size: 100%;
+        block-size: 1.2em;
+        object-fit: contain;
+        vertical-align: -0.24em;
+    }
+
+    .handwriting-demo {
+        font-family: "Bradley Hand", "Segoe Print", "Comic Sans MS", cursive;
+    }
+
+    .handwriting-demo::before {
+        content: attr(data-word);
+    }
+}
+
+@media print {
+    .handwriting-toggle {
+        display: none !important;
+    }
+}

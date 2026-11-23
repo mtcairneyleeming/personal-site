@@ -93,6 +93,7 @@ tmp=$(mktemp -d)
 trap 'rm -rf "$tmp"' EXIT
 
 hugo build --cleanDestinationDir -d "$tmp/public"
+python3 ops/handwriting.py prepare "$tmp/public"
 files=$(find "$tmp/public" -type f | wc -l)
 {
   echo "sha: $(git rev-parse HEAD)"
