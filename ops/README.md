@@ -16,6 +16,8 @@ ops/update.sh --theme          # also overwrite themes/PaperMod with upstream
 - Hugo is pinned in `ops/hugo-version` (0.170.1, the server's version). `deploy.sh` refuses another local
   version unless you pass `--any-hugo`. Install it with the release tarball from
   https://github.com/gohugoio/hugo/releases into `~/.local/bin`.
+- The handwriting step runs with `uv run --locked`, so uv must be installed and `uv.lock` must match
+  `pyproject.toml` (run `uv lock` after editing dependencies by hand).
 - A dirty working tree deploys with a warning and a `-dirty` suffix in the release id.
 - Releases are `/srv/personal-site/releases/<YYYYmmdd-HHMMSS>-<shortsha>[-dirty]/`; the newest 5 are kept.
   Unchanged files are hard-linked to the live release (`rsync --link-dest`), so only changes are uploaded.
@@ -28,11 +30,14 @@ ops/update.sh --theme          # also overwrite themes/PaperMod with upstream
 ## Previewing handwriting
 
 Everything here runs locally, with no deploy. Run these commands from the site directory with
-Hugo, Python 3, and `uv` available. Local files go in `handwriting-worksheets/`, which git ignores.
+Hugo and [uv](https://docs.astral.sh/uv/) available. The Python tools are a uv project:
+`pyproject.toml` lists the dependencies (ReportLab, PyMuPDF) and `uv.lock` pins them. `uv run`
+creates `.venv/` and installs them on first use, and `uv add` or `uv remove` changes them.
+Local files go in `handwriting-worksheets/`, which git ignores.
 
 ```sh
-python3 ops/handwriting.py prepare    # hugo build into handwriting-worksheets/site, then annotate
-python3 -m http.server 8321 --bind 127.0.0.1 --directory handwriting-worksheets/site
+uv run ops/handwriting.py prepare    # hugo build into handwriting-worksheets/site, then annotate
+uv run -m http.server 8321 --bind 127.0.0.1 --directory handwriting-worksheets/site
 ```
 
 `prepare` replaces the previous preview build each time. It also writes
@@ -42,15 +47,14 @@ preview at http://127.0.0.1:8321/ and use the **Handwriting** switch in the top 
 directory argument (as `ops/deploy.sh` uses it), `prepare` builds for the real domain and writes
 no catalog.
 
-`uv run ops/handwriting.py` installs the worksheet and import dependencies (ReportLab, PyMuPDF)
-from the header of the script. To try the browser side with simulated ink:
+To try the browser side with simulated ink:
 
 ```sh
 # The mock folder is outside blank/, so rm-sync leaves it alone.
 uv run ops/handwriting.py worksheet handwriting-worksheets/mock/worksheet.pdf --page / --limit 12
-python3 ops/handwriting.py mock-export handwriting-worksheets/mock/worksheet.json \
+uv run ops/handwriting.py mock-export handwriting-worksheets/mock/worksheet.json \
   handwriting-worksheets/mock/mock-export.json
-python3 ops/handwriting.py import-mock handwriting-worksheets/mock/worksheet.json \
+uv run ops/handwriting.py import-mock handwriting-worksheets/mock/worksheet.json \
   handwriting-worksheets/mock/mock-export.json handwriting-worksheets/site/handwriting/ink.json
 ```
 
@@ -103,7 +107,7 @@ new name.
 uv run ops/handwriting.py worksheet --page /    # e.g. handwriting-worksheets/blank/2026-11-24-home.pdf
 (cd ~/scripts/rm-sync && uv run src/sync.py handwriting)   # upload; run again after writing
 uv run ops/handwriting.py import-pdf    # every filled worksheet; or name one, e.g. 2026-11-24-home
-python3 ops/handwriting.py prepare    # rebuild the preview with the new ink
+uv run ops/handwriting.py prepare    # rebuild the preview with the new ink
 ```
 
 Without an output path, `worksheet` names the PDF after the date and `--page`. The name ends in

@@ -92,7 +92,7 @@ id=$(date +%Y%m%d-%H%M%S)-$sha$dirty
 tmp=$(mktemp -d)
 trap 'rm -rf "$tmp"' EXIT
 
-python3 ops/handwriting.py prepare "$tmp/public"  # runs hugo build, then annotates
+uv run --locked ops/handwriting.py prepare "$tmp/public"  # runs hugo build, then annotates
 files=$(find "$tmp/public" -type f | wc -l)
 {
   echo "sha: $(git rev-parse HEAD)"

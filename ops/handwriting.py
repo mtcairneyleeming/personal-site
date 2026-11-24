@@ -1,23 +1,20 @@
 #!/usr/bin/env python3
-# /// script
-# dependencies = ["reportlab", "pymupdf"]
-# ///
-# `uv run ops/handwriting.py ...` brings the worksheet and import dependencies.
-# `prepare` needs only the standard library, so deployment runs it with python3.
+# Run with `uv run ops/handwriting.py ...`: the dependencies for worksheets and import
+# (ReportLab, PyMuPDF) are in pyproject.toml. `prepare` needs only the standard library.
 """Build and annotate the Hugo site, make worksheets, and import ink."""
 
 import argparse
+import json
+import re
+import subprocess
 from collections import Counter
 from dataclasses import dataclass, field
 from datetime import date
 from hashlib import sha256
 from html import unescape
 from html.parser import HTMLParser
-import json
 from math import isfinite
 from pathlib import Path
-import re
-import subprocess
 
 SITE = Path(__file__).resolve().parent.parent
 WORKSPACE = SITE / "handwriting-worksheets"  # gitignored
@@ -25,7 +22,7 @@ PREVIEW_URL = "http://127.0.0.1:8321/"
 MANIFEST = Path("handwriting/ink.json")
 RM2_PAGE_SIZE = (1404 * 72 / 226, 1872 * 72 / 226)
 HEADINGS = {"h1", "h2", "h3", "h4", "h5", "h6"}
-VOID = set("area base br col embed hr img input link meta param source track wbr".split())
+VOID = {"area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"}
 SKIP = {"aside", "button", "code", "math", "pre", "script", "style", "svg", "table", "template"}
 ENTITY = re.compile(r"&(?:#[xX][\da-fA-F]+|#\d+|[a-zA-Z][a-zA-Z0-9]*);")
 BOUNDARY = re.compile(r"""[.!?]+[”’"')\]]*(?=\s|$)|[;:](?=\s)|\s[—–]\s""")
@@ -270,7 +267,7 @@ def prepare(public, catalog, base_url):
         write_json(catalog, list(entries.values()))
     print(f"Prepared {len(paths)} HTML files and collected {len(entries)} writing prompts.")
     if local:
-        print(f"Catalog: {catalog.relative_to(SITE)}\nPreview: python3 -m http.server 8321 "
+        print(f"Catalog: {catalog.relative_to(SITE)}\nPreview: uv run -m http.server 8321 "
               f"--bind 127.0.0.1 --directory {public.relative_to(SITE)}")
 
 

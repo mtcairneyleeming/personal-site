@@ -1,0 +1,11 @@
+[project]
+name = "personal-site"
+version = "0.1.0"
+description = "Personal website (Hugo), with tools for its handwriting mode"
+requires-python = ">=3.12"
+dependencies = [
+    # PyMuPDF 2 requires ONNX Runtime, NumPy and more for layout analysis, which the
+    # importer does not use; 1.28 draws and reads PDF vectors the same way.
+    "pymupdf>=1.28,<2",
+    "reportlab>=5.1.1",
+]
