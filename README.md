@@ -8,7 +8,9 @@ See [ops/README.md](ops/README.md#previewing-handwriting) for how handwriting wo
   own worksheet rows, written larger and with a thicker pen.
 - **Redrawing words:** add an easy way to evict imported handwriting so it can be redrawn. For
   example, a mode like `?handwriting=debug` where you pick the words you don't like and
-  download a list of them, or a small local server that removes them directly.
+  download a list of them, or a small local server that removes them directly. `import-pdf`
+  without names re-imports every worksheet, so evicted words must be remembered, or the next
+  import brings them back.
 - **Size and spacing:** check whether handwriting still reads smaller than the text. The
   importer now measures each worksheet's baseline and x-height from the ink. The writing turned
   out to sit on the guides already, at 4.0 mm small letters on the 4 mm guide. It also scales the

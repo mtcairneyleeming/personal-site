@@ -102,7 +102,7 @@ new name.
 ```sh
 uv run ops/handwriting.py worksheet --page /    # e.g. handwriting-worksheets/blank/2026-11-24-home.pdf
 (cd ~/scripts/rm-sync && uv run src/sync.py handwriting)   # upload; run again after writing
-uv run ops/handwriting.py import-pdf handwriting-worksheets/blank/2026-11-24-home.pdf
+uv run ops/handwriting.py import-pdf    # every filled worksheet; or name one, e.g. 2026-11-24-home
 python3 ops/handwriting.py prepare    # rebuild the preview with the new ink
 ```
 
@@ -110,8 +110,11 @@ Without an output path, `worksheet` names the PDF after the date and `--page`. T
 `home` for `/`, `notes` for `/notes/`, or `all` without `--page`. It adds `-2`, `-3`, and so on
 rather than replace an existing worksheet. The JSON map goes beside the PDF.
 
-`import-pdf` reads the filled PDF with the same name from `filled/` and merges the ink into
-`static/handwriting/ink.json`. Pass a filled PDF and a manifest path to use others. The ink lives
+Without names, `import-pdf` imports every PDF in `filled/` that has its blank and map in
+`blank/`, oldest worksheet first, so ink for a prompt redrawn on a later worksheet wins. It
+merges the ink into `static/handwriting/ink.json` (`--output` for another manifest). To import
+one worksheet, name it by its blank or filled PDF, or just its file name. For a completed PDF
+kept elsewhere, pass the blank and `--filled`. The ink lives
 in `static/`, not `data/` or `content/`, because the browser fetches the manifest and each word's
 SVG as files. Hugo copies `static/` into the site unchanged. It reads `data/` only during the
 build, and `content/` holds pages. Every build includes the ink, but nothing goes live until you

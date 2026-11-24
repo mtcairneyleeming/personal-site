@@ -455,21 +455,75 @@ def import_mock(worksheet_map, export, output):
     print(f"Imported demo ink for {len(entries)} writing prompts.")
 
 
-def import_pdf(blank, filled, output, worksheet_map):
-    import fcntl
-    import os
-    from tempfile import TemporaryDirectory
+def worksheets_to_import(names, filled):
+    """(blank, filled) PDF pairs for import-pdf.
 
+    A name can be the blank or the filled PDF, or just the file name. Without names, every
+    filled worksheet that has its blank, oldest first, so ink for a prompt redrawn on a later
+    worksheet replaces the earlier ink.
+    """
+    if not names:
+        if filled:
+            raise ValueError("--filled needs the worksheet it belongs to")
+        pairs = []
+        for path in sorted((WORKSPACE / "filled").glob("*.pdf")):
+            blank = WORKSPACE / "blank" / path.name
+            if blank.is_file() and blank.with_suffix(".json").is_file():
+                pairs.append((blank, path))
+            else:
+                print(f"Skipping {path.relative_to(SITE)}: blank/ has no worksheet and map for it.")
+        if not pairs:
+            raise ValueError("handwriting-worksheets/filled/ has no worksheets to import")
+        return sorted(pairs, key=lambda pair: pair[0].stat().st_mtime)
+    if filled and len(names) > 1:
+        raise ValueError("--filled works with one worksheet only")
+    pairs = []
+    for name in names:
+        path = Path(name)
+        if path.suffix != ".pdf":
+            path = path.with_name(path.name + ".pdf")
+        # A blank PDF has its map beside it. Otherwise look the name up in blank/.
+        blank = path if path.with_suffix(".json").is_file() else WORKSPACE / "blank" / path.name
+        pairs.append((blank, filled or WORKSPACE / "filled" / path.name))
+    return pairs
+
+
+def import_pdf(worksheets, filled, output):
     try:
-        from handwriting_pdf import read_worksheet_ink
+        import handwriting_pdf  # noqa: F401
     except ModuleNotFoundError as error:
         if error.name != "pymupdf":
             raise
         raise ValueError("PDF import requires PyMuPDF (uv run ops/handwriting.py ...)") from error
 
-    filled = filled or WORKSPACE / "filled" / blank.name
     output = output or SITE / "static" / MANIFEST
-    slots = read_json(worksheet_map or blank.with_suffix(".json"))
+    pairs = worksheets_to_import(worksheets, filled)
+    failed = []
+    for blank, filled_pdf in pairs:
+        if len(pairs) > 1:
+            print(f"\n{blank.stem}")
+        try:
+            import_worksheet(blank, filled_pdf, output)
+        except ValueError as error:
+            if len(pairs) == 1:
+                raise
+            print(f"Not imported: {error}")
+            failed.append(blank.stem)
+    if failed:
+        raise ValueError(f"\n{len(failed)} of {len(pairs)} worksheets failed: {', '.join(failed)}")
+
+
+def import_worksheet(blank, filled, output):
+    import fcntl
+    import os
+    from tempfile import TemporaryDirectory
+
+    from handwriting_pdf import read_worksheet_ink
+
+    for path in (blank, blank.with_suffix(".json"), filled):
+        if not path.is_file():
+            raise ValueError(f"{path} does not exist")
+    slots = read_json(blank.with_suffix(".json"))
     prompts = {}
     warnings = []
     for slot, words, problem in read_worksheet_ink(blank, filled, slots, warnings):
@@ -574,13 +628,18 @@ def main():
     command.add_argument("worksheet_map", type=Path)
     command.add_argument("export", type=Path)
     command.add_argument("output", type=Path)
-    command = commands.add_parser("import-pdf", help="Extract word SVGs from a vector worksheet export")
-    command.add_argument("blank", type=Path, help="Original blank worksheet PDF")
-    command.add_argument("filled", type=Path, nargs="?",
-                         help="Completed worksheet PDF export (default: same name in handwriting-worksheets/filled/)")
-    command.add_argument("output", type=Path, nargs="?",
+    command = commands.add_parser(
+        "import-pdf", help="Import the ink from completed worksheets",
+        description="Import the ink from completed worksheets into the manifest. Name a worksheet "
+                    "by its blank or filled PDF, or just its file name. Without names, import "
+                    "every worksheet in handwriting-worksheets/filled/ that has its blank, "
+                    "oldest first.")
+    command.add_argument("worksheets", nargs="*", help="e.g. 2026-11-24-home-3")
+    command.add_argument("--filled", type=Path,
+                         help="Completed PDF kept elsewhere than handwriting-worksheets/filled/ "
+                              "(with one worksheet)")
+    command.add_argument("--output", type=Path,
                          help="Destination ink.json manifest (default: static/handwriting/ink.json)")
-    command.add_argument("--worksheet-map", type=Path, help="Defaults to the JSON beside the blank PDF")
     args = vars(parser.parse_args())
     action = args.pop("command")
     handlers = {"prepare": prepare, "worksheet": worksheet,
