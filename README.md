@@ -1,5 +1,24 @@
 # Minimalist Hugo Template for Academic Websites
 
+## To do: handwriting
+
+See [ops/README.md](ops/README.md#previewing-handwriting) for how handwriting works.
+
+- **Larger text:** headings and other large text, such as the homepage name, should get their
+  own worksheet rows, written larger and with a thicker pen.
+- **Redrawing words:** add an easy way to evict imported handwriting so it can be redrawn. For
+  example, a mode like `?handwriting=debug` where you pick the words you don't like and
+  download a list of them, or a small local server that removes them directly.
+- **Size and spacing:** check whether handwriting still reads smaller than the text. The
+  importer now measures each worksheet's baseline and x-height from the ink. The writing turned
+  out to sit on the guides already, at 4.0 mm small letters on the 4 mm guide. It also scales the
+  writing about 10% above the font's x-height, to match the typed lowercase measured the same way
+  (`TYPE_BAND_EX`). If it still looks small, the thin pen strokes are the likely cause; consider
+  thicker strokes.
+
+  Handwritten lines could also sit a little closer together, since occasional overlaps are
+  fine.
+
 This repository contains a [Hugo](https://github.com/gohugoio/hugo) template to create a personal academic website. The template uses the [PaperMod theme](https://github.com/adityatelange/hugo-PaperMod) but modifies it in various ways to be more minimalist and better suited for academic websites. The website is hosted on [GitHub Pages](https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages).
 
 ## Documentation

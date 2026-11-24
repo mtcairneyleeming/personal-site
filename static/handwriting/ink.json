@@ -7,23 +7,27 @@
         {
           "text": "Max",
           "src": "words/d0ebb95d249ad65baee4-1-3b7891eb575620a0.svg",
-          "width": 4.4467,
-          "height": 2.9774,
-          "descender": 0.1278,
+          "width": 4.8227,
+          "height": 3.2292,
+          "descender": 0.1402,
           "guides": {
-            "cap": 2.5,
-            "bottom": 0.9208
+            "cap": 2.7099,
+            "x": 1.0831,
+            "base": -0.0015,
+            "bottom": 1.0001
           }
         },
         {
           "text": "Cairney-Leeming",
           "src": "words/d0ebb95d249ad65baee4-2-572b1316bc27f716.svg",
-          "width": 16.4508,
-          "height": 4.3039,
-          "descender": 1.7059,
+          "width": 17.8419,
+          "height": 4.6678,
+          "descender": 1.8517,
           "guides": {
-            "cap": 2.5,
-            "bottom": 0.9208
+            "cap": 2.7099,
+            "x": 1.0831,
+            "base": -0.0015,
+            "bottom": 1.0001
           }
         }
       ]
@@ -33,222 +37,262 @@
       "words": [
         {
           "text": "I",
-          "src": "words/31a3b8cfc8a616127a72-1-936d9388c82c3b78.svg",
-          "width": 1.7644,
-          "height": 2.7346,
-          "descender": 0.0353,
+          "src": "words/31a3b8cfc8a616127a72-1-9aaba914c968ff1a.svg",
+          "width": 1.9136,
+          "height": 2.9644,
+          "descender": 0.0383,
           "guides": {
-            "cap": 2.5,
-            "bottom": 0.9208
+            "cap": 2.7099,
+            "x": 1.0831,
+            "base": -0.0015,
+            "bottom": 1.0001
           }
         },
         {
           "text": "am",
           "src": "words/31a3b8cfc8a616127a72-2-4b59f80c29179708.svg",
-          "width": 2.348,
-          "height": 1.1145,
-          "descender": 0.1111,
+          "width": 2.5466,
+          "height": 1.2087,
+          "descender": 0.122,
           "guides": {
-            "cap": 2.5,
-            "bottom": 0.9208
+            "cap": 2.7099,
+            "x": 1.0831,
+            "base": -0.0015,
+            "bottom": 1.0001
           }
         },
         {
           "text": "a",
           "src": "words/31a3b8cfc8a616127a72-3-8b18b57338e04e05.svg",
-          "width": 1.3864,
-          "height": 1.1116,
-          "descender": 0.2904,
+          "width": 1.5036,
+          "height": 1.2056,
+          "descender": 0.3164,
           "guides": {
-            "cap": 2.5,
-            "bottom": 0.9208
+            "cap": 2.7099,
+            "x": 1.0831,
+            "base": -0.0015,
+            "bottom": 1.0001
           }
         },
         {
           "text": "PhD",
           "src": "words/31a3b8cfc8a616127a72-4-733577371692243f.svg",
-          "width": 3.7882,
-          "height": 2.5402,
-          "descender": 0.4924,
+          "width": 4.1085,
+          "height": 2.755,
+          "descender": 0.5355,
           "guides": {
-            "cap": 2.5,
-            "bottom": 0.9208
+            "cap": 2.7099,
+            "x": 1.0831,
+            "base": -0.0015,
+            "bottom": 1.0001
           }
         },
         {
           "text": "student",
-          "src": "words/31a3b8cfc8a616127a72-5-fcd27da92869b6eb.svg",
-          "width": 6.0119,
-          "height": 2.5325,
-          "descender": 0.0353,
+          "src": "words/31a3b8cfc8a616127a72-5-6c47390d1a86cdd4.svg",
+          "width": 6.5203,
+          "height": 2.7452,
+          "descender": 0.0383,
           "guides": {
-            "cap": 2.5,
-            "bottom": 0.9208
+            "cap": 2.7099,
+            "x": 1.0831,
+            "base": -0.0015,
+            "bottom": 1.0001
           }
         },
         {
           "text": "at",
-          "src": "words/31a3b8cfc8a616127a72-6-8c49d348d4214f6d.svg",
-          "width": 1.6214,
-          "height": 2.6447,
-          "descender": 0.0353,
+          "src": "words/31a3b8cfc8a616127a72-6-70d770afb3ce6301.svg",
+          "width": 1.7585,
+          "height": 2.8669,
+          "descender": 0.0383,
           "guides": {
-            "cap": 2.5,
-            "bottom": 0.9208
+            "cap": 2.7099,
+            "x": 1.0831,
+            "base": -0.0015,
+            "bottom": 1.0001
           }
         },
         {
           "text": "the",
           "src": "words/31a3b8cfc8a616127a72-7-e660263d2f6a2fbc.svg",
-          "width": 2.4097,
-          "height": 2.6053,
-          "descender": 0.3429,
+          "width": 2.6135,
+          "height": 2.8256,
+          "descender": 0.3734,
           "guides": {
-            "cap": 2.5,
-            "bottom": 0.9208
+            "cap": 2.7099,
+            "x": 1.0831,
+            "base": -0.0015,
+            "bottom": 1.0001
           }
         },
         {
           "text": "Institute",
           "src": "words/31a3b8cfc8a616127a72-8-bea80293aa48a7d5.svg",
-          "width": 8.8222,
-          "height": 3.01,
-          "descender": 0.2825,
+          "width": 9.5682,
+          "height": 3.2646,
+          "descender": 0.3079,
           "guides": {
-            "cap": 2.5,
-            "bottom": 0.9208
+            "cap": 2.7099,
+            "x": 1.0831,
+            "base": -0.0015,
+            "bottom": 1.0001
           }
         },
         {
           "text": "of",
           "src": "words/31a3b8cfc8a616127a72-9-5741eae1d26bf5cd.svg",
-          "width": 1.8594,
-          "height": 4.3213,
-          "descender": 1.5247,
+          "width": 2.0166,
+          "height": 4.6867,
+          "descender": 1.6552,
           "guides": {
-            "cap": 2.5,
-            "bottom": 0.9208
+            "cap": 2.7099,
+            "x": 1.0831,
+            "base": -0.0015,
+            "bottom": 1.0001
           }
         },
         {
           "text": "Science",
           "src": "words/31a3b8cfc8a616127a72-10-4d75239849a7b373.svg",
-          "width": 5.5135,
-          "height": 2.228,
-          "descender": 0.1794,
+          "width": 5.9797,
+          "height": 2.4164,
+          "descender": 0.1961,
           "guides": {
-            "cap": 2.5,
-            "bottom": 0.9208
+            "cap": 2.7099,
+            "x": 1.0831,
+            "base": -0.0015,
+            "bottom": 1.0001
           }
         },
         {
           "text": "and",
-          "src": "words/31a3b8cfc8a616127a72-11-1bc16fa17c2f2509.svg",
-          "width": 2.9335,
-          "height": 1.778,
-          "descender": 0.0353,
+          "src": "words/31a3b8cfc8a616127a72-11-9b6d0d5ba144a3e9.svg",
+          "width": 3.1816,
+          "height": 1.9269,
+          "descender": 0.0383,
           "guides": {
-            "cap": 2.5,
-            "bottom": 0.9208
+            "cap": 2.7099,
+            "x": 1.0831,
+            "base": -0.0015,
+            "bottom": 1.0001
           }
         },
         {
           "text": "Technology",
           "src": "words/31a3b8cfc8a616127a72-12-ad9fe8638925f002.svg",
-          "width": 8.6079,
-          "height": 3.5702,
-          "descender": 1.0625,
+          "width": 9.3358,
+          "height": 3.8721,
+          "descender": 1.1539,
           "guides": {
-            "cap": 2.5,
-            "bottom": 0.9208
+            "cap": 2.7099,
+            "x": 1.0831,
+            "base": -0.0015,
+            "bottom": 1.0001
           }
         },
         {
           "text": "Austria",
           "src": "words/31a3b8cfc8a616127a72-13-9c573fff638ecee8.svg",
-          "width": 6.9236,
-          "height": 2.7344,
-          "descender": 0.1612,
+          "width": 7.5091,
+          "height": 2.9656,
+          "descender": 0.1763,
           "guides": {
-            "cap": 2.5,
-            "bottom": 0.9208
+            "cap": 2.7099,
+            "x": 1.0831,
+            "base": -0.0015,
+            "bottom": 1.0001
           }
         },
         {
           "text": "(ISTA),",
           "src": "words/31a3b8cfc8a616127a72-14-b0887f63c6d1a076.svg",
-          "width": 7.8457,
-          "height": 3.3189,
-          "descender": 0.6818,
+          "width": 8.5091,
+          "height": 3.5996,
+          "descender": 0.7409,
           "guides": {
-            "cap": 2.5,
-            "bottom": 0.9208
+            "cap": 2.7099,
+            "x": 1.0831,
+            "base": -0.0015,
+            "bottom": 1.0001
           }
         },
         {
           "text": "near",
           "src": "words/31a3b8cfc8a616127a72-15-fb43ddcf25ca346f.svg",
-          "width": 3.9586,
-          "height": 1.4329,
-          "descender": 0.3355,
+          "width": 4.2933,
+          "height": 1.5541,
+          "descender": 0.3654,
           "guides": {
-            "cap": 2.5,
-            "bottom": 0.9208
+            "cap": 2.7099,
+            "x": 1.0831,
+            "base": -0.0015,
+            "bottom": 1.0001
           }
         },
         {
           "text": "Vienna,",
           "src": "words/31a3b8cfc8a616127a72-16-0987ac7b0d2e98e2.svg",
-          "width": 6.8737,
-          "height": 2.8531,
-          "descender": 0.3628,
+          "width": 7.4549,
+          "height": 3.0944,
+          "descender": 0.395,
           "guides": {
-            "cap": 2.5,
-            "bottom": 0.9208
+            "cap": 2.7099,
+            "x": 1.0831,
+            "base": -0.0015,
+            "bottom": 1.0001
           }
         },
         {
           "text": "supervised",
           "src": "words/31a3b8cfc8a616127a72-17-ad3402f5bb511fb7.svg",
-          "width": 10.2804,
-          "height": 3.8022,
-          "descender": 1.3822,
+          "width": 11.1497,
+          "height": 4.1238,
+          "descender": 1.5006,
           "guides": {
-            "cap": 2.5,
-            "bottom": 0.9208
+            "cap": 2.7099,
+            "x": 1.0831,
+            "base": -0.0015,
+            "bottom": 1.0001
           }
         },
         {
           "text": "by",
           "src": "words/31a3b8cfc8a616127a72-18-36b18abfc153ae3c.svg",
-          "width": 2.3028,
-          "height": 3.3331,
-          "descender": 1.0695,
+          "width": 2.4975,
+          "height": 3.6149,
+          "descender": 1.1614,
           "guides": {
-            "cap": 2.5,
-            "bottom": 0.9208
+            "cap": 2.7099,
+            "x": 1.0831,
+            "base": -0.0015,
+            "bottom": 1.0001
           }
         },
         {
           "text": "Christoph",
           "src": "words/31a3b8cfc8a616127a72-19-5d9513319087d736.svg",
-          "width": 7.432,
-          "height": 3.6837,
-          "descender": 1.3232,
+          "width": 8.0605,
+          "height": 3.9952,
+          "descender": 1.4366,
           "guides": {
-            "cap": 2.5,
-            "bottom": 0.9208
+            "cap": 2.7099,
+            "x": 1.0831,
+            "base": -0.0015,
+            "bottom": 1.0001
           }
         },
         {
           "text": "Lampert.",
           "src": "words/31a3b8cfc8a616127a72-20-2ce08e499b46baf4.svg",
-          "width": 7.4692,
-          "height": 3.1562,
-          "descender": 0.8843,
+          "width": 8.1008,
+          "height": 3.423,
+          "descender": 0.9606,
           "guides": {
-            "cap": 2.5,
-            "bottom": 0.9208
+            "cap": 2.7099,
+            "x": 1.0831,
+            "base": -0.0015,
+            "bottom": 1.0001
           }
         }
       ]
@@ -258,211 +302,812 @@
       "words": [
         {
           "text": "I",
-          "src": "words/aba1e507820f62447f1b-1-2138c215b6e33018.svg",
-          "width": 1.4791,
-          "height": 2.4182,
-          "descender": 0.0353,
+          "src": "words/aba1e507820f62447f1b-1-9244ad212f194993.svg",
+          "width": 1.6042,
+          "height": 2.6212,
+          "descender": 0.0383,
           "guides": {
-            "cap": 2.5,
-            "bottom": 0.9208
+            "cap": 2.7099,
+            "x": 1.0831,
+            "base": -0.0015,
+            "bottom": 1.0001
           }
         },
         {
           "text": "work",
-          "src": "words/aba1e507820f62447f1b-2-3588119374a8e76e.svg",
-          "width": 3.8032,
-          "height": 2.6452,
-          "descender": 0.0353,
+          "src": "words/aba1e507820f62447f1b-2-7a24624cbc68afee.svg",
+          "width": 4.1248,
+          "height": 2.8674,
+          "descender": 0.0383,
           "guides": {
-            "cap": 2.5,
-            "bottom": 0.9208
+            "cap": 2.7099,
+            "x": 1.0831,
+            "base": -0.0015,
+            "bottom": 1.0001
           }
         },
         {
           "text": "on",
           "src": "words/aba1e507820f62447f1b-3-3d30b48ec59ee34c.svg",
-          "width": 1.8361,
-          "height": 1.4641,
-          "descender": 0.3024,
+          "width": 1.9914,
+          "height": 1.5879,
+          "descender": 0.3294,
           "guides": {
-            "cap": 2.5,
-            "bottom": 0.9208
+            "cap": 2.7099,
+            "x": 1.0831,
+            "base": -0.0015,
+            "bottom": 1.0001
           }
         },
         {
           "text": "differential",
           "src": "words/aba1e507820f62447f1b-4-65fe5fba28c8adf2.svg",
-          "width": 9.9856,
-          "height": 4.8416,
-          "descender": 1.7176,
+          "width": 10.83,
+          "height": 5.251,
+          "descender": 1.8644,
           "guides": {
-            "cap": 2.5,
-            "bottom": 0.9208
+            "cap": 2.7099,
+            "x": 1.0831,
+            "base": -0.0015,
+            "bottom": 1.0001
           }
         },
         {
           "text": "privacy",
           "src": "words/aba1e507820f62447f1b-5-0e3a5d8b6538a0bc.svg",
-          "width": 8.2719,
-          "height": 3.2957,
-          "descender": 1.6458,
+          "width": 8.9714,
+          "height": 3.5744,
+          "descender": 1.7865,
           "guides": {
-            "cap": 2.5,
-            "bottom": 0.9208
+            "cap": 2.7099,
+            "x": 1.0831,
+            "base": -0.0015,
+            "bottom": 1.0001
           }
         },
         {
           "text": "for",
           "src": "words/aba1e507820f62447f1b-6-900b3e9cda4fd1c7.svg",
-          "width": 3.1642,
-          "height": 2.9437,
-          "descender": 0.8649,
+          "width": 3.4317,
+          "height": 3.1927,
+          "descender": 0.9396,
           "guides": {
-            "cap": 2.5,
-            "bottom": 0.9208
+            "cap": 2.7099,
+            "x": 1.0831,
+            "base": -0.0015,
+            "bottom": 1.0001
           }
         },
         {
           "text": "deep",
           "src": "words/aba1e507820f62447f1b-7-df4eead412b290ea.svg",
-          "width": 3.5698,
-          "height": 3.5449,
-          "descender": 1.2018,
+          "width": 3.8717,
+          "height": 3.8446,
+          "descender": 1.3049,
           "guides": {
-            "cap": 2.5,
-            "bottom": 0.9208
+            "cap": 2.7099,
+            "x": 1.0831,
+            "base": -0.0015,
+            "bottom": 1.0001
           }
         },
         {
           "text": "learning,",
           "src": "words/aba1e507820f62447f1b-8-129bc766a29a239d.svg",
-          "width": 6.4034,
-          "height": 3.9796,
-          "descender": 1.7487,
+          "width": 6.9449,
+          "height": 4.3161,
+          "descender": 1.898,
           "guides": {
-            "cap": 2.5,
-            "bottom": 0.9208
+            "cap": 2.7099,
+            "x": 1.0831,
+            "base": -0.0015,
+            "bottom": 1.0001
           }
         },
         {
           "text": "and",
-          "src": "words/aba1e507820f62447f1b-9-a0084441c5b36bad.svg",
-          "width": 2.5997,
-          "height": 2.1399,
-          "descender": 0.0353,
+          "src": "words/aba1e507820f62447f1b-9-929c76ad9c37da28.svg",
+          "width": 2.8196,
+          "height": 2.3194,
+          "descender": 0.0383,
           "guides": {
-            "cap": 2.5,
-            "bottom": 0.9208
+            "cap": 2.7099,
+            "x": 1.0831,
+            "base": -0.0015,
+            "bottom": 1.0001
           }
         },
         {
           "text": "in",
           "src": "words/aba1e507820f62447f1b-10-5a874c43fbd25226.svg",
-          "width": 1.5742,
-          "height": 1.7329,
-          "descender": 0.1337,
+          "width": 1.7073,
+          "height": 1.8794,
+          "descender": 0.1465,
           "guides": {
-            "cap": 2.5,
-            "bottom": 0.9208
+            "cap": 2.7099,
+            "x": 1.0831,
+            "base": -0.0015,
+            "bottom": 1.0001
           }
         },
         {
           "text": "particular",
           "src": "words/aba1e507820f62447f1b-11-2a39e535be7c92dc.svg",
-          "width": 9.3686,
-          "height": 3.4763,
-          "descender": 0.9979,
+          "width": 10.1609,
+          "height": 3.7702,
+          "descender": 1.0838,
           "guides": {
-            "cap": 2.5,
-            "bottom": 0.9208
+            "cap": 2.7099,
+            "x": 1.0831,
+            "base": -0.0015,
+            "bottom": 1.0001
           }
         },
         {
           "text": "on",
           "src": "words/aba1e507820f62447f1b-12-98c91f55386b9b04.svg",
-          "width": 1.6841,
-          "height": 1.2075,
-          "descender": 0.2541,
+          "width": 1.8265,
+          "height": 1.3096,
+          "descender": 0.2771,
           "guides": {
-            "cap": 2.5,
-            "bottom": 0.9208
+            "cap": 2.7099,
+            "x": 1.0831,
+            "base": -0.0015,
+            "bottom": 1.0001
           }
         },
         {
           "text": "how",
-          "src": "words/aba1e507820f62447f1b-13-6896b5c9d511345f.svg",
-          "width": 2.994,
-          "height": 2.3163,
-          "descender": 0.0353,
+          "src": "words/aba1e507820f62447f1b-13-02b022a989a01b63.svg",
+          "width": 3.2471,
+          "height": 2.5107,
+          "descender": 0.0383,
           "guides": {
-            "cap": 2.5,
-            "bottom": 0.9208
+            "cap": 2.7099,
+            "x": 1.0831,
+            "base": -0.0015,
+            "bottom": 1.0001
           }
         },
         {
           "text": "privacy",
           "src": "words/aba1e507820f62447f1b-14-0d573aaeec8576e5.svg",
-          "width": 8.2461,
-          "height": 3.2625,
-          "descender": 1.4428,
+          "width": 8.9434,
+          "height": 3.5383,
+          "descender": 1.5663,
           "guides": {
-            "cap": 2.5,
-            "bottom": 0.9208
+            "cap": 2.7099,
+            "x": 1.0831,
+            "base": -0.0015,
+            "bottom": 1.0001
           }
         },
         {
           "text": "interacts",
           "src": "words/aba1e507820f62447f1b-15-5c9b19897ea50ec8.svg",
-          "width": 6.794,
-          "height": 2.3565,
-          "descender": 0.255,
+          "width": 7.3685,
+          "height": 2.5558,
+          "descender": 0.2781,
           "guides": {
-            "cap": 2.5,
-            "bottom": 0.9208
+            "cap": 2.7099,
+            "x": 1.0831,
+            "base": -0.0015,
+            "bottom": 1.0001
           }
         },
         {
           "text": "with",
           "src": "words/aba1e507820f62447f1b-16-bb8146f010d811ef.svg",
-          "width": 3.2847,
-          "height": 2.768,
-          "descender": 0.0983,
+          "width": 3.5624,
+          "height": 3.002,
+          "descender": 0.1081,
           "guides": {
-            "cap": 2.5,
-            "bottom": 0.9208
+            "cap": 2.7099,
+            "x": 1.0831,
+            "base": -0.0015,
+            "bottom": 1.0001
           }
         },
         {
           "text": "other",
           "src": "words/aba1e507820f62447f1b-17-8be8b1c363975fe7.svg",
-          "width": 4.6089,
-          "height": 2.8594,
-          "descender": 0.1256,
+          "width": 4.9986,
+          "height": 3.1011,
+          "descender": 0.1377,
           "guides": {
-            "cap": 2.5,
-            "bottom": 0.9208
+            "cap": 2.7099,
+            "x": 1.0831,
+            "base": -0.0015,
+            "bottom": 1.0001
           }
         },
         {
           "text": "trustworthiness",
           "src": "words/aba1e507820f62447f1b-18-7ecab2ee438c7ddd.svg",
-          "width": 11.6134,
-          "height": 2.8809,
-          "descender": 0.1956,
+          "width": 12.5954,
+          "height": 3.1245,
+          "descender": 0.2137,
           "guides": {
-            "cap": 2.5,
-            "bottom": 0.9208
+            "cap": 2.7099,
+            "x": 1.0831,
+            "base": -0.0015,
+            "bottom": 1.0001
           }
         },
         {
           "text": "concerns,",
           "src": "words/aba1e507820f62447f1b-19-351f2a12db8d72d6.svg",
-          "width": 7.4318,
-          "height": 1.7284,
-          "descender": 0.5305,
+          "width": 8.0602,
+          "height": 1.8745,
+          "descender": 0.5769,
           "guides": {
-            "cap": 2.5,
-            "bottom": 0.9208
+            "cap": 2.7099,
+            "x": 1.0831,
+            "base": -0.0015,
+            "bottom": 1.0001
+          }
+        }
+      ]
+    },
+    "d76030c9bfff09142836": {
+      "fingerprint": "7861a2bcae85d687ca5596dbf463c88df32c84f583ca452a9590d6bc0ea63df5",
+      "words": [
+        {
+          "text": "such",
+          "src": "words/d76030c9bfff09142836-1-1a74f59c83bf0b4d.svg",
+          "width": 3.7265,
+          "height": 2.728,
+          "descender": 0.1356,
+          "guides": {
+            "cap": 1.9631,
+            "x": 1.1316,
+            "base": 0.0229,
+            "bottom": 1.3075
+          }
+        },
+        {
+          "text": "as",
+          "src": "words/d76030c9bfff09142836-2-c4d53bd37c5aadd4.svg",
+          "width": 1.4342,
+          "height": 1.3954,
+          "descender": 0.2263,
+          "guides": {
+            "cap": 1.9631,
+            "x": 1.1316,
+            "base": 0.0229,
+            "bottom": 1.3075
+          }
+        },
+        {
+          "text": "fairness",
+          "src": "words/d76030c9bfff09142836-3-4b1940744b6171b7.svg",
+          "width": 6.1987,
+          "height": 3.3809,
+          "descender": 1.2952,
+          "guides": {
+            "cap": 1.9631,
+            "x": 1.1316,
+            "base": 0.0229,
+            "bottom": 1.3075
+          }
+        },
+        {
+          "text": "and",
+          "src": "words/d76030c9bfff09142836-4-698ab46af26f5483.svg",
+          "width": 3.2643,
+          "height": 2.1822,
+          "descender": 0.1799,
+          "guides": {
+            "cap": 1.9631,
+            "x": 1.1316,
+            "base": 0.0229,
+            "bottom": 1.3075
+          }
+        },
+        {
+          "text": "worst-group",
+          "src": "words/d76030c9bfff09142836-5-709ef1703c5bd72f.svg",
+          "width": 10.0759,
+          "height": 3.0628,
+          "descender": 1.2689,
+          "guides": {
+            "cap": 1.9631,
+            "x": 1.1316,
+            "base": 0.0229,
+            "bottom": 1.3075
+          }
+        },
+        {
+          "text": "performance.",
+          "src": "words/d76030c9bfff09142836-6-20d47a9763627bfb.svg",
+          "width": 11.3803,
+          "height": 4.2225,
+          "descender": 1.9223,
+          "guides": {
+            "cap": 1.9631,
+            "x": 1.1316,
+            "base": 0.0229,
+            "bottom": 1.3075
+          }
+        }
+      ]
+    },
+    "a5a44a78c80c0e2ac78a": {
+      "fingerprint": "35a3c0164751e4b83a00aa3079d06c50dcf38de3fb37d8a93e7e8e4355f426ad",
+      "words": [
+        {
+          "text": "I",
+          "src": "words/a5a44a78c80c0e2ac78a-1-30205e28cf565cbc.svg",
+          "width": 1.7398,
+          "height": 2.3381,
+          "descender": 0.1093,
+          "guides": {
+            "cap": 1.9631,
+            "x": 1.1316,
+            "base": 0.0229,
+            "bottom": 1.3075
+          }
+        },
+        {
+          "text": "also",
+          "src": "words/a5a44a78c80c0e2ac78a-2-bb1a0a91f645b808.svg",
+          "width": 3.1938,
+          "height": 2.1823,
+          "descender": 0.1846,
+          "guides": {
+            "cap": 1.9631,
+            "x": 1.1316,
+            "base": 0.0229,
+            "bottom": 1.3075
+          }
+        },
+        {
+          "text": "work",
+          "src": "words/a5a44a78c80c0e2ac78a-3-e03722f6d97b34c8.svg",
+          "width": 3.9808,
+          "height": 2.5593,
+          "descender": 0.3485,
+          "guides": {
+            "cap": 1.9631,
+            "x": 1.1316,
+            "base": 0.0229,
+            "bottom": 1.3075
+          }
+        },
+        {
+          "text": "on",
+          "src": "words/a5a44a78c80c0e2ac78a-4-3cd96052ec23a5c0.svg",
+          "width": 1.6876,
+          "height": 1.1687,
+          "descender": 0.0969,
+          "guides": {
+            "cap": 1.9631,
+            "x": 1.1316,
+            "base": 0.0229,
+            "bottom": 1.3075
+          }
+        },
+        {
+          "text": "the",
+          "src": "words/a5a44a78c80c0e2ac78a-5-9fdcedb4e3754205.svg",
+          "width": 2.1572,
+          "height": 2.3081,
+          "descender": 0.2163,
+          "guides": {
+            "cap": 1.9631,
+            "x": 1.1316,
+            "base": 0.0229,
+            "bottom": 1.3075
+          }
+        },
+        {
+          "text": "theory",
+          "src": "words/a5a44a78c80c0e2ac78a-6-05dce2eaa75ecaf9.svg",
+          "width": 4.2478,
+          "height": 2.4297,
+          "descender": 0.5604,
+          "guides": {
+            "cap": 1.9631,
+            "x": 1.1316,
+            "base": 0.0229,
+            "bottom": 1.3075
+          }
+        },
+        {
+          "text": "of",
+          "src": "words/a5a44a78c80c0e2ac78a-7-d6f579d4fe3be5a7.svg",
+          "width": 1.5165,
+          "height": 3.1714,
+          "descender": 1.2356,
+          "guides": {
+            "cap": 1.9631,
+            "x": 1.1316,
+            "base": 0.0229,
+            "bottom": 1.3075
+          }
+        },
+        {
+          "text": "DP:",
+          "src": "words/a5a44a78c80c0e2ac78a-8-f809953746845383.svg",
+          "width": 3.0315,
+          "height": 2.2361,
+          "descender": 0.2882,
+          "guides": {
+            "cap": 1.9631,
+            "x": 1.1316,
+            "base": 0.0229,
+            "bottom": 1.3075
+          }
+        }
+      ]
+    },
+    "6c72ea455b23a81a6610": {
+      "fingerprint": "58016d48851378464e7ac83603f5b0ffa991d0d4c9daff1baf89df6b392f8466",
+      "words": [
+        {
+          "text": "I",
+          "src": "words/6c72ea455b23a81a6610-1-111b3d4f9d7d11ca.svg",
+          "width": 2.1209,
+          "height": 2.2878,
+          "descender": 0.0851,
+          "guides": {
+            "cap": 1.9631,
+            "x": 1.1316,
+            "base": 0.0229,
+            "bottom": 1.3075
+          }
+        },
+        {
+          "text": "am",
+          "src": "words/6c72ea455b23a81a6610-2-b55a08adaf5a2a31.svg",
+          "width": 2.623,
+          "height": 1.2299,
+          "descender": 0.0418,
+          "guides": {
+            "cap": 1.9631,
+            "x": 1.1316,
+            "base": 0.0229,
+            "bottom": 1.3075
+          }
+        },
+        {
+          "text": "a",
+          "src": "words/6c72ea455b23a81a6610-3-cd0c21e12e3de9bc.svg",
+          "width": 1.4808,
+          "height": 1.3372,
+          "descender": 0.0769,
+          "guides": {
+            "cap": 1.9631,
+            "x": 1.1316,
+            "base": 0.0229,
+            "bottom": 1.3075
+          }
+        },
+        {
+          "text": "member",
+          "src": "words/6c72ea455b23a81a6610-4-f84e0f972af9d274.svg",
+          "width": 6.7215,
+          "height": 2.736,
+          "descender": 0.3813,
+          "guides": {
+            "cap": 1.9631,
+            "x": 1.1316,
+            "base": 0.0229,
+            "bottom": 1.3075
+          }
+        },
+        {
+          "text": "of",
+          "src": "words/6c72ea455b23a81a6610-5-3ad8bbe2c76b7cb1.svg",
+          "width": 1.8902,
+          "height": 4.1662,
+          "descender": 1.5323,
+          "guides": {
+            "cap": 1.9631,
+            "x": 1.1316,
+            "base": 0.0229,
+            "bottom": 1.3075
+          }
+        },
+        {
+          "text": "the",
+          "src": "words/6c72ea455b23a81a6610-6-0029da384791f974.svg",
+          "width": 2.8509,
+          "height": 2.7048,
+          "descender": 0.1503,
+          "guides": {
+            "cap": 1.9631,
+            "x": 1.1316,
+            "base": 0.0229,
+            "bottom": 1.3075
+          }
+        },
+        {
+          "text": "ELLIS",
+          "src": "words/6c72ea455b23a81a6610-7-e670c1710a60090a.svg",
+          "width": 6.6658,
+          "height": 2.6389,
+          "descender": 0.4281,
+          "guides": {
+            "cap": 1.9631,
+            "x": 1.1316,
+            "base": 0.0229,
+            "bottom": 1.3075
+          }
+        },
+        {
+          "text": "PhD",
+          "src": "words/6c72ea455b23a81a6610-8-aaa5b191b8b70790.svg",
+          "width": 3.8125,
+          "height": 2.5642,
+          "descender": 0.4791,
+          "guides": {
+            "cap": 1.9631,
+            "x": 1.1316,
+            "base": 0.0229,
+            "bottom": 1.3075
+          }
+        },
+        {
+          "text": "Program,",
+          "src": "words/6c72ea455b23a81a6610-9-7277366cbf5fcf31.svg",
+          "width": 6.8403,
+          "height": 3.3306,
+          "descender": 1.1819,
+          "guides": {
+            "cap": 1.9631,
+            "x": 1.1316,
+            "base": 0.0229,
+            "bottom": 1.3075
+          }
+        },
+        {
+          "text": "co-supervised",
+          "src": "words/6c72ea455b23a81a6610-10-ec3ecc0ada0ef9ea.svg",
+          "width": 12.4256,
+          "height": 3.5116,
+          "descender": 1.4701,
+          "guides": {
+            "cap": 1.9631,
+            "x": 1.1316,
+            "base": 0.0229,
+            "bottom": 1.3075
+          }
+        },
+        {
+          "text": "by",
+          "src": "words/6c72ea455b23a81a6610-11-8653021926e61121.svg",
+          "width": 1.8257,
+          "height": 3.5154,
+          "descender": 1.5526,
+          "guides": {
+            "cap": 1.9631,
+            "x": 1.1316,
+            "base": 0.0229,
+            "bottom": 1.3075
+          }
+        },
+        {
+          "text": "Amartya",
+          "src": "words/6c72ea455b23a81a6610-12-c090a2b3eb934703.svg",
+          "width": 7.1657,
+          "height": 3.3205,
+          "descender": 1.1026,
+          "guides": {
+            "cap": 1.9631,
+            "x": 1.1316,
+            "base": 0.0229,
+            "bottom": 1.3075
+          }
+        },
+        {
+          "text": "Sanyal",
+          "src": "words/6c72ea455b23a81a6610-13-bc544be74a2e7897.svg",
+          "width": 6.2844,
+          "height": 3.3678,
+          "descender": 1.2152,
+          "guides": {
+            "cap": 1.9631,
+            "x": 1.1316,
+            "base": 0.0229,
+            "bottom": 1.3075
+          }
+        },
+        {
+          "text": "at",
+          "src": "words/6c72ea455b23a81a6610-14-e57eb7b19ce4377a.svg",
+          "width": 1.9423,
+          "height": 2.4816,
+          "descender": 0.1576,
+          "guides": {
+            "cap": 1.9631,
+            "x": 1.1316,
+            "base": 0.0229,
+            "bottom": 1.3075
+          }
+        },
+        {
+          "text": "the",
+          "src": "words/6c72ea455b23a81a6610-15-fb5bfe8bfd259794.svg",
+          "width": 1.9068,
+          "height": 2.7439,
+          "descender": 0.0391,
+          "guides": {
+            "cap": 1.9631,
+            "x": 1.1316,
+            "base": 0.0229,
+            "bottom": 1.3075
+          }
+        },
+        {
+          "text": "University",
+          "src": "words/6c72ea455b23a81a6610-16-348be852531d8b34.svg",
+          "width": 9.919,
+          "height": 3.4172,
+          "descender": 0.7227,
+          "guides": {
+            "cap": 1.9631,
+            "x": 1.1316,
+            "base": 0.0229,
+            "bottom": 1.3075
+          }
+        },
+        {
+          "text": "of",
+          "src": "words/6c72ea455b23a81a6610-17-2774fca73486ea02.svg",
+          "width": 1.9946,
+          "height": 3.8569,
+          "descender": 1.0977,
+          "guides": {
+            "cap": 1.9631,
+            "x": 1.1316,
+            "base": 0.0229,
+            "bottom": 1.3075
+          }
+        },
+        {
+          "text": "Copenhagen.",
+          "src": "words/6c72ea455b23a81a6610-18-487f3c8eb161a30d.svg",
+          "width": 12.5209,
+          "height": 4.4858,
+          "descender": 2.0466,
+          "guides": {
+            "cap": 1.9631,
+            "x": 1.1316,
+            "base": 0.0229,
+            "bottom": 1.3075
+          }
+        }
+      ]
+    },
+    "17a8be213947b2bc1562": {
+      "fingerprint": "82b2eb07aaea1da81684fdbaf171f0ef11c109a086a1040e84851d67ad01856e",
+      "words": [
+        {
+          "text": "Publications",
+          "src": "words/17a8be213947b2bc1562-1-e6c9c10a33789f8f.svg",
+          "width": 10.8707,
+          "height": 2.9282,
+          "descender": 0.2401,
+          "guides": {
+            "cap": 1.9631,
+            "x": 1.1316,
+            "base": 0.0229,
+            "bottom": 1.3075
+          }
+        }
+      ]
+    },
+    "cd02f47ad07aef01ceec": {
+      "fingerprint": "8064cf61d3cfa0021cf9c4d749a1566ca67af34b2e0896100124329101afd8e3",
+      "words": [
+        {
+          "text": "Assorted",
+          "src": "words/cd02f47ad07aef01ceec-1-f93ba61bac91a87d.svg",
+          "width": 6.9948,
+          "height": 2.6115,
+          "descender": 0.2926,
+          "guides": {
+            "cap": 1.9631,
+            "x": 1.1316,
+            "base": 0.0229,
+            "bottom": 1.3075
+          }
+        },
+        {
+          "text": "Notes",
+          "src": "words/cd02f47ad07aef01ceec-2-4ca202ae651ebcb8.svg",
+          "width": 5.17,
+          "height": 2.805,
+          "descender": 0.2417,
+          "guides": {
+            "cap": 1.9631,
+            "x": 1.1316,
+            "base": 0.0229,
+            "bottom": 1.3075
+          }
+        }
+      ]
+    },
+    "7269f8a7d3780148f923": {
+      "fingerprint": "65759dbbf7ed515d646cd3726b5af1fb6522c3931732cfbdd74b0d49f12875d0",
+      "words": [
+        {
+          "text": "Preprint",
+          "src": "words/7269f8a7d3780148f923-1-530f6256c0ce32ed.svg",
+          "width": 7.1851,
+          "height": 4.0813,
+          "descender": 1.4868,
+          "guides": {
+            "cap": 1.9631,
+            "x": 1.1316,
+            "base": 0.0229,
+            "bottom": 1.3075
+          }
+        },
+        {
+          "text": "available:",
+          "src": "words/7269f8a7d3780148f923-2-dff48ba735b3c01a.svg",
+          "width": 9.3495,
+          "height": 3.0188,
+          "descender": 0.1414,
+          "guides": {
+            "cap": 1.9631,
+            "x": 1.1316,
+            "base": 0.0229,
+            "bottom": 1.3075
+          }
+        },
+        {
+          "text": "Data",
+          "src": "words/7269f8a7d3780148f923-3-db5292edc2878514.svg",
+          "width": 4.9871,
+          "height": 2.5294,
+          "descender": 0.1414,
+          "guides": {
+            "cap": 1.9631,
+            "x": 1.1316,
+            "base": 0.0229,
+            "bottom": 1.3075
+          }
+        },
+        {
+          "text": "Reconstruction",
+          "src": "words/7269f8a7d3780148f923-4-313b1e4f05d50206.svg",
+          "width": 12.8989,
+          "height": 2.6968,
+          "descender": 0.3219,
+          "guides": {
+            "cap": 1.9631,
+            "x": 1.1316,
+            "base": 0.0229,
+            "bottom": 1.3075
+          }
+        },
+        {
+          "text": "under",
+          "src": "words/7269f8a7d3780148f923-5-801d4f0ccf765ca4.svg",
+          "width": 4.8476,
+          "height": 2.5886,
+          "descender": 0.1868,
+          "guides": {
+            "cap": 1.9631,
+            "x": 1.1316,
+            "base": 0.0229,
+            "bottom": 1.3075
+          }
+        },
+        {
+          "text": "DP",
+          "src": "words/7269f8a7d3780148f923-6-bc2f1e94adbee1fe.svg",
+          "width": 3.4663,
+          "height": 2.6442,
+          "descender": 0.2597,
+          "guides": {
+            "cap": 1.9631,
+            "x": 1.1316,
+            "base": 0.0229,
+            "bottom": 1.3075
           }
         }
       ]

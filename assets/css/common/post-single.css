@@ -5,7 +5,7 @@
 
 .post-title {
     margin-bottom: 20px;
-    font-size: 36px;
+    font-size: 2.25rem;
 }
 
 .post-description {
@@ -16,7 +16,7 @@
 .post-meta,
 .breadcrumbs {
     color: var(--secondary);
-    font-size: 15px;
+    font-size: 0.9375rem;
 }
 
 .post-meta .i18n_list li {
@@ -41,27 +41,27 @@
 
 .post-content h1 {
     margin: 40px auto 32px;
-    font-size: 40px;
+    font-size: 2.5rem;
 }
 
 .post-content h2 {
     margin: 32px auto 24px;
-    font-size: 24px;
+    font-size: 1.5rem;
 }
 
 .post-content h3 {
-    font-size: 19px;    
+    font-size: 1.1875rem;    
 }
 
 .post-content h4 {
-    font-size: 15px;    
+    font-size: 0.9375rem;    
     font-weight: var(--semibold);
     text-transform: uppercase;
     color: var(--gray);
 }
 
 .post-content h5 {
-    font-size: 14px;
+    font-size: 0.875rem;
     font-weight: var(--semibold);
     text-transform: uppercase;
     color: var(--gray);
@@ -151,7 +151,7 @@
 
 .post-content table th {
     text-align: start;
-    font-size: 14px;
+    font-size: 0.875rem;
     font-weight: var(--semibold);
     text-transform: uppercase;
     color: var(--gray);
@@ -205,7 +205,7 @@
 .post-content code {
     margin: auto 4px;
     padding: 4px 6px;
-    font-size: 0.78em;
+    font-size: 0.72em;
     line-height: var(--lineheight);
     background: var(--code-bg);
     border-radius: 2px;
@@ -254,14 +254,14 @@
 
 .post-content figure > figcaption {
     color: var(--primary);
-    font-size: 16px;
+    font-size: 1rem;
     font-weight: bold;
     margin: 8px 0 16px;
 }
 
 .post-content figure > figcaption > p {
     color: var(--secondary);
-    font-size: 14px;
+    font-size: 0.875rem;
     font-weight: normal;
 }
 
@@ -295,14 +295,14 @@
     display: inline;
     font-weight: var(--semibold);
     text-transform: uppercase;
-    font-size: 15px;
+    font-size: 0.9375rem;
 }
 
 .toc .inner {
     margin: 5px 20px 0;
     padding: 0 10px;
     opacity: 0.9;
-    font-size: 16px;
+    font-size: 1rem;
 }
 
 .toc li ul {
@@ -343,8 +343,8 @@
     display: block;
     padding: 0 10px;
     color: var(--secondary);
-    font-size: 16px;
-    line-height: 32px;
+    font-size: 1rem;
+    line-height: 2;
     background: var(--code-bg);
 }
 
@@ -404,7 +404,7 @@ h6:hover .anchor {
 .paginav .title {
     letter-spacing: 1px;
     text-transform: uppercase;
-    font-size: small;
+    font-size: 0.8125rem;
     color: var(--secondary);
 }
 

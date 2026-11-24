@@ -7,8 +7,23 @@ import pymupdf
 
 
 MATCH_TOLERANCE = 0.2
-BOX_TOLERANCE = 1.0
-CAP_HEIGHT_EM = 0.72
+# Ink that touches no box joins the nearest box within this many letter heights.
+NEAREST_BOX_LETTER_HEIGHTS = 1.0
+WORD_PADDING = 0.4
+# Word sizes are in CSS ex, the x-height of the font the browser uses, so handwriting follows
+# the text's size. The scale comes from the measured height of the small letters
+# (measure_writing) and TYPE_BAND_EX.
+# Older worksheet maps have no x_height. Small letters on them reached 0.4 of the capital height.
+DEFAULT_X_HEIGHT_RATIO = 0.4
+# Typed lowercase measured the same way as the writing (measure_writing) is a band 1.10 ex tall
+# in EB Garamond: round letters overshoot the x-height and baseline, serifs add ink at both, and
+# the font declares its x-height (which sets ex) slightly below the drawn one. The writing's band
+# is scaled to the same height. Re-measure this if the site font changes.
+TYPE_BAND_EX = 1.10
+# Measuring the writing needs this many rows with ink; otherwise the printed guides are used.
+MIN_MEASURED_ROWS = 3
+PIXELS_PER_POINT = 4
+MM = 72 / 25.4
 
 
 def item_points(item):
@@ -151,22 +166,112 @@ def svg_path(path, sx, sy):
     return f'<path d="{" ".join(commands)}" {" ".join(style)}/>'
 
 
-def vector_word(paths, bounds, slot, sx, sy):
-    _, top, _, height = slot["box"]
-    width = bounds.width + 0.8
-    left = bounds.x0 - 0.4
+def guide_x_height(slot):
+    return slot.get("x_height") or slot["letter_height"] * DEFAULT_X_HEIGHT_RATIO
+
+
+def measure_writing(rows):
+    """Where the small letters actually sit, from how densely the ink covers each height.
+
+    rows holds (slot, strokes, sx, sy) for every box with ink on one worksheet. The body of the
+    small letters is the densest band of ink. Its edges, where the density falls to half,
+    are the writing's own baseline and x-height. Returns (offset, x_height) in points, the
+    offset being how far that baseline sits above the printed one, or None when there is too
+    little writing or the result is implausible.
+    """
+    if len(rows) < MIN_MEASURED_ROWS:
+        return None
+    guide = guide_x_height(rows[0][0])
+    below, above = 2 * guide, 3 * guide
+    steps = round((below + above) * PIXELS_PER_POINT)
+    profile = [0] * steps
+    opaque = bytes(int(value >= 128) for value in range(256))
+    for slot, strokes, sx, sy in rows:
+        baseline = slot["box"][1] + slot["baseline"]
+        left = min(extent.x0 for _, extent in strokes)
+        width = max(extent.x1 for _, extent in strokes) - left
+        markup = "".join(svg_path(path, sx, sy) for path, _ in strokes)
+        svg = (f'<svg xmlns="http://www.w3.org/2000/svg" width="{width * PIXELS_PER_POINT:.2f}" '
+               f'height="{steps}" viewBox="{left:.4f} {baseline - above:.4f} {width:.4f} '
+               f'{below + above:.4f}">{markup}</svg>')
+        with pymupdf.open(stream=svg.encode(), filetype="svg") as image:
+            pixmap = image[0].get_pixmap(colorspace=pymupdf.csGRAY, alpha=True)
+        samples, stride = pixmap.samples, pixmap.stride
+        for row in range(min(pixmap.height, steps)):
+            line = samples[row * stride:row * stride + 2 * pixmap.width]
+            profile[row] += line[1::2].translate(opaque).count(1)
+
+    def height(row):  # points above the printed baseline at the middle of a pixel row
+        return above - (row + 0.5) / PIXELS_PER_POINT
+
+    # Smooth over a tenth of the guide x-height, so a single thin row does not end the band.
+    reach = max(1, round(0.05 * guide * PIXELS_PER_POINT))
+    smooth = [sum(profile[max(0, i - reach):i + reach + 1]) / (2 * reach + 1) for i in range(steps)]
+    core = sorted(value for row, value in enumerate(smooth) if 0.2 <= height(row) / guide <= 0.7)
+    if not core or not core[len(core) // 2]:
+        return None
+    half = core[len(core) // 2] / 2
+    middle = min(range(steps), key=lambda row: abs(height(row) - 0.45 * guide))
+    top = bottom = middle
+    while top > 0 and smooth[top - 1] >= half:
+        top -= 1
+    while bottom < steps - 1 and smooth[bottom + 1] >= half:
+        bottom += 1
+    lower = height(bottom) - 0.5 / PIXELS_PER_POINT
+    x_height = height(top) + 0.5 / PIXELS_PER_POINT - lower
+    if not 0.5 * guide <= x_height <= 1.5 * guide or abs(lower) > 0.5 * guide:
+        return None
+    return lower, x_height
+
+
+def vector_word(paths, bounds, slot, sx, sy, measured):
+    """An SVG of the word, sized in ex, with its baseline position and the worksheet guides.
+
+    The baseline and ex come from the measured writing when available, else from the printed
+    guides. The image spans exactly the ink, so a line on the site grows only where the
+    writing reaches further above or below the baseline than the typed text does.
+    """
+    box_top, box_height = slot["box"][1], slot["box"][3]
+    offset, x_height = measured or (0, guide_x_height(slot))
+    baseline = box_top + slot["baseline"] - offset
+    ex = x_height / TYPE_BAND_EX  # points of writing per ex on the site
+    # The image reaches at least the baseline, so it can be aligned on it.
+    top = min(bounds.y0, baseline) - WORD_PADDING
+    bottom = max(bounds.y1, baseline) + WORD_PADDING
+    width = bounds.width + 2 * WORD_PADDING
+    left = bounds.x0 - WORD_PADDING
     markup = "\n".join(svg_path(path, sx, sy) for path in paths)
-    scale = CAP_HEIGHT_EM / slot["letter_height"]
     return {
         "svg": (f'<svg xmlns="http://www.w3.org/2000/svg" '
-                f'viewBox="{left:.4f} {top:.4f} {width:.4f} {height:.4f}">\n{markup}\n</svg>\n'),
-        "width": round(width * scale, 4),
-        "height": round(height * scale, 4),
-        "descender": round((height - slot["baseline"]) * scale, 4),
+                f'viewBox="{left:.4f} {top:.4f} {width:.4f} {bottom - top:.4f}">\n{markup}\n</svg>\n'),
+        "width": round(width / ex, 4),
+        "height": round((bottom - top) / ex, 4),
+        "descender": round((bottom - baseline) / ex, 4),
+        # Where the worksheet's printed lines were, in ex from the writing's baseline.
+        "guides": {"cap": round((slot["letter_height"] - offset) / ex, 4),
+                   "x": round((guide_x_height(slot) - offset) / ex, 4),
+                   "base": round(-offset / ex, 4),
+                   "bottom": round((box_top + box_height - baseline) / ex, 4)},
     }
 
 
-def read_worksheet_ink(blank_path, filled_path, slots):
+def nearest_box(extent, boxes):
+    """The box the stroke overlaps most, else the closest one within reach, else None."""
+    overlaps = [(abs(extent & box), index) for index, (_, box) in enumerate(boxes)
+                if extent.intersects(box)]
+    if overlaps:
+        return max(overlaps)[1]
+    distances = []
+    for index, (slot, box) in enumerate(boxes):
+        dx = max(box.x0 - extent.x1, extent.x0 - box.x1, 0)
+        dy = max(box.y0 - extent.y1, extent.y0 - box.y1, 0)
+        if (dx * dx + dy * dy) ** 0.5 <= slot["letter_height"] * NEAREST_BOX_LETTER_HEIGHTS:
+            distances.append((dx * dx + dy * dy, index))
+    return min(distances)[1] if distances else None
+
+
+def read_worksheet_ink(blank_path, filled_path, slots, warnings):
+    """Ink per writing box as (slot, words, problem). Notes go in warnings."""
     rows = defaultdict(list)
     for slot in slots:
         if not slot.get("letter_height") or "baseline" not in slot:
@@ -174,6 +279,7 @@ def read_worksheet_ink(blank_path, filled_path, slots):
         rows[slot["page"]].append(slot)
 
     results = []
+    written = []  # (position in results, (slot, strokes, sx, sy)) for boxes with ink
     with pymupdf.open(blank_path) as blank, pymupdf.open(filled_path) as filled:
         if not blank.is_pdf or not filled.is_pdf:
             raise ValueError("Both worksheet files must be PDFs")
@@ -203,18 +309,37 @@ def read_worksheet_ink(blank_path, filled_path, slots):
             for slot, box in boxes:
                 if not original.rect.contains(box) or box.is_empty:
                     raise ValueError(f"Invalid writing box on page {number}")
-                touching = [(path, extent) for path, extent in paths if box.intersects(extent)]
-                if not touching:
-                    results.append((slot, [], None))
-                    continue
-                padded = box + (-BOX_TOLERANCE, -BOX_TOLERANCE, BOX_TOLERANCE, BOX_TOLERANCE)
-                try:
-                    if not all(padded.contains(extent) for _, extent in touching):
-                        raise ValueError("ink crosses the writing box boundary")
-                    groups = word_groups(touching, len(slot["text"].split()), slot["letter_height"])
-                    words = [vector_word(group, extent, slot, sx, sy) for group, extent in groups]
-                except ValueError as error:
-                    results.append((slot, [], str(error)))
+            # Each stroke belongs to one box, so ink over an edge stays with the row it was written in.
+            assigned = defaultdict(list)
+            stray = 0
+            for path, extent in paths:
+                owner = nearest_box(extent, boxes)
+                if owner is None:
+                    stray += 1
                 else:
-                    results.append((slot, words, None))
+                    assigned[owner].append((path, extent))
+            if stray:
+                warnings.append(f"Page {number}: ignored {stray} strokes away from every writing box.")
+            for index, (slot, _) in enumerate(boxes):
+                results.append((slot, [], None))
+                if assigned[index]:
+                    written.append((len(results) - 1, (slot, assigned[index], sx, sy)))
+
+    # The whole worksheet is measured at once, then every word is placed with that measurement.
+    measured = measure_writing([row for _, row in written])
+    if measured:
+        offset, x_height = measured
+        guide = guide_x_height(written[0][1][0])
+        warnings.append(f"Measured the writing: small letters {x_height / MM:.1f} mm tall "
+                        f"(guide {guide / MM:.1f} mm), sitting {offset / MM:+.1f} mm from the baseline.")
+    elif written:
+        warnings.append("Too little writing to measure it; using the printed guides.")
+    for position, (slot, strokes, sx, sy) in written:
+        try:
+            groups = word_groups(strokes, len(slot["text"].split()), slot["letter_height"])
+            words = [vector_word(group, extent, slot, sx, sy, measured) for group, extent in groups]
+        except ValueError as error:
+            results[position] = (slot, [], str(error))
+        else:
+            results[position] = (slot, words, None)
     return results

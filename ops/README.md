@@ -27,26 +27,57 @@ ops/update.sh --theme          # also overwrite themes/PaperMod with upstream
 
 ## Previewing handwriting
 
-Run these commands from the site directory with Hugo, Python 3, and `uv` available.
+Everything here runs locally, with no deploy. Run these commands from the site directory with
+Hugo, Python 3, and `uv` available. Local files go in `handwriting-worksheets/`, which git ignores.
 
 ```sh
-preview_dir=$(mktemp -d)
-hugo build --baseURL http://127.0.0.1:8321/ -d "$preview_dir/site"
-python3 ops/handwriting.py prepare "$preview_dir/site" --catalog "$preview_dir/catalog.json"
-uv run --with reportlab python ops/handwriting.py worksheet \
-  "$preview_dir/catalog.json" "$preview_dir/worksheet.pdf" --page / --limit 12 --letter-height-mm 10
-python3 ops/handwriting.py mock-export "$preview_dir/worksheet.json" "$preview_dir/mock-export.json"
-python3 ops/handwriting.py import-mock "$preview_dir/worksheet.json" \
-  "$preview_dir/mock-export.json" "$preview_dir/site/handwriting/ink.json"
-python3 -m http.server 8321 --bind 127.0.0.1 --directory "$preview_dir/site"
+python3 ops/handwriting.py prepare    # hugo build into handwriting-worksheets/site, then annotate
+python3 -m http.server 8321 --bind 127.0.0.1 --directory handwriting-worksheets/site
 ```
 
-Open the preview at http://127.0.0.1:8321/ and use the **Handwriting** switch in the top right. The
-PDF is at `$preview_dir/worksheet.pdf`. Use `--page /notes/` for notes prompts or omit
-`--page` for sitewide coverage. The PDF matches the reMarkable 2 display proportions and size.
-`--letter-height-mm` sets the height of the prompt's capital letters and the spacing between the
-writing guides. Each box fits one line. Wide prompts continue in numbered boxes, and the JSON
-records each box in PDF points from the top left of its page.
+`prepare` replaces the previous preview build each time. It also writes
+`handwriting-worksheets/catalog.json`, which lists the prompts that do not have ink yet. Open the
+preview at http://127.0.0.1:8321/ and use the **Handwriting** switch in the top right. Run
+`prepare` again after editing the site or importing ink. `worksheet` also runs it first. With a
+directory argument (as `ops/deploy.sh` uses it), `prepare` builds for the real domain and writes
+no catalog.
+
+`uv run ops/handwriting.py` installs the worksheet and import dependencies (ReportLab, PyMuPDF)
+from the header of the script. To try the browser side with simulated ink:
+
+```sh
+# The mock folder is outside blank/, so rm-sync leaves it alone.
+uv run ops/handwriting.py worksheet handwriting-worksheets/mock/worksheet.pdf --page / --limit 12
+python3 ops/handwriting.py mock-export handwriting-worksheets/mock/worksheet.json \
+  handwriting-worksheets/mock/mock-export.json
+python3 ops/handwriting.py import-mock handwriting-worksheets/mock/worksheet.json \
+  handwriting-worksheets/mock/mock-export.json handwriting-worksheets/site/handwriting/ink.json
+```
+
+The demo ink lasts until the next `prepare`. `--page` takes the path of one page: `/` is the
+homepage and `/notes/` is the notes list, not the notes themselves. Omit it to cover every page.
+`--limit` caps the number of prompts. The PDF matches the reMarkable 2 display proportions and
+size. `--letter-height-mm` (default 7) sets the capital rule at the top of each box, and
+`--x-height-mm` (default 4) the dashed guide for small letters such as n and m. Small letters
+reached 4 mm on the first worksheets. The space below the baseline is one x-height.
+
+The importer does not rely on the guides alone. It measures where the small letters actually
+sit on each worksheet: the body of the lowercase is the densest band of ink, and the band's
+edges give the writing's own baseline and x-height. With fewer than 3 rows of writing, or an
+implausible result, it uses the printed guides; older worksheet maps without the dashed guide
+assume 0.4 of the capital height. The site sizes each word in CSS `ex`, so it follows the
+x-height of whichever font the browser uses. Typed EB Garamond measured the same way has a band
+1.10 ex tall (overshoot and serifs), so the writing's band is scaled to that.
+`TYPE_BAND_EX` in `ops/handwriting_pdf.py` holds this value; re-measure it if the font
+changes.
+
+Add `?handwriting=debug` to a page URL to see each word's image box, the font's baseline,
+x-height and capital height, and the worksheet's baseline, dashed line, capital rule and box
+bottom as scaled.
+`--text-height-mm` (default 7) sets the capital height of the typed prompt, and so how many
+words go in each box. Lower it if you could fit more on a line. Each box fits one line. Wide
+prompts continue in numbered boxes, and the JSON records each box in PDF points from the top
+left of its page.
 
 Preparation inserts inline markers into the built HTML. It derives each ID from the source
 page, prompt text and repeat number. Copies of a news item share its IDs across views, while
@@ -55,31 +86,52 @@ display until matching ink is available. Homepage button labels are included. Lo
 at sentence and clause boundaries
 where possible. Paragraphs containing code or math and text inside tables stay typed.
 
-The mock export simulates word boxes and emits demo ink for the browser. The deployment script
-runs preparation with the Python standard library.
+The mock export simulates word boxes and emits demo ink for the browser. `prepare` needs only
+the Python standard library and Hugo.
 
 ### Importing a completed reMarkable worksheet
 
-Keep the blank PDF and its sibling JSON file. Export the annotated copy from reMarkable as a PDF
-with the same pages. Use a freshly prepared local build with an empty ink manifest for the first
-real import.
+Keep the blank PDF and its sibling JSON file. Put real worksheets in
+`handwriting-worksheets/blank/`. `src/sync.py handwriting` in `~/scripts/rm-sync` uploads
+each new blank PDF once to the **Handwriting** folder on the reMarkable. After you write on a
+worksheet, the sync exports it to `handwriting-worksheets/filled/` under the same file name, and
+again after each change. The sync deletes nothing. Trash a finished worksheet on the reMarkable,
+and the sync will not upload it again. If you change a blank after uploading it, save it under a
+new name.
 
 ```sh
-uv run --with pymupdf python ops/handwriting.py import-pdf \
-  "$preview_dir/worksheet.pdf" /path/to/completed.pdf "$preview_dir/site/handwriting/ink.json"
+uv run ops/handwriting.py worksheet --page /    # e.g. handwriting-worksheets/blank/2026-11-24-home.pdf
+(cd ~/scripts/rm-sync && uv run src/sync.py handwriting)   # upload; run again after writing
+uv run ops/handwriting.py import-pdf handwriting-worksheets/blank/2026-11-24-home.pdf
+python3 ops/handwriting.py prepare    # rebuild the preview with the new ink
 ```
 
-The importer subtracts the blank worksheet vectors, uses the existing writing boxes and
-baselines, and writes an SVG per word next to the manifest. Refresh the local site and check the
-result with **Handwriting**. Use the same destination for subsequent imports. Completed prompts
-are merged into the manifest. Empty boxes are fine, and a prompt stays typed until every row
-in that prompt is present in an export. Keep the earlier writing on the same worksheet if you
-plan to finish a prompt later.
+Without an output path, `worksheet` names the PDF after the date and `--page`. The name ends in
+`home` for `/`, `notes` for `/notes/`, or `all` without `--page`. It adds `-2`, `-3`, and so on
+rather than replace an existing worksheet. The JSON map goes beside the PDF.
 
-The importer reports rows with ink outside their boxes or ambiguous word gaps. It uses the typed
-prompt to count the expected words, so check that the writing appears under the right words in
-the preview. It currently expects a vector export whose page layout matches the original PDF.
-Once reviewed, a real manifest and its word SVGs can live under `static/handwriting/`.
+`import-pdf` reads the filled PDF with the same name from `filled/` and merges the ink into
+`static/handwriting/ink.json`. Pass a filled PDF and a manifest path to use others. The ink lives
+in `static/`, not `data/` or `content/`, because the browser fetches the manifest and each word's
+SVG as files. Hugo copies `static/` into the site unchanged. It reads `data/` only during the
+build, and `content/` holds pages. Every build includes the ink, but nothing goes live until you
+deploy. Check the preview, then commit the manifest and its `words/` SVGs, or discard them with
+git. `ops/deploy.sh` ships uncommitted ink too, with its usual `-dirty` warning. Because the
+catalog leaves out prompts that already have ink, the next worksheet covers only the remaining
+prompts.
+
+The importer subtracts the blank worksheet vectors, uses the existing writing boxes and
+baselines, and writes an SVG per word next to the manifest. Completed prompts are merged into
+the manifest. Empty boxes are fine, and a prompt stays typed until every row in that prompt is
+present in an export. Keep the earlier writing on the same worksheet if you plan to finish a
+prompt later.
+
+Writing over the edge of a box is fine. Each stroke goes to the box it overlaps most, or to the
+nearest box within one capital height when it touches none, and the word keeps the overhanging
+ink. On the site, each word image spans its ink, so a line grows only as far as its writing
+reaches above or below the typed text. The importer reports strokes further from every
+box, which it ignores, and rows whose word gaps are ambiguous. It uses the typed prompt to count
+the expected words, so check that the writing appears under the right words in the preview. It currently expects a vector export whose page layout matches the original PDF.
 
 ## One-time server setup (as root on the server)
 

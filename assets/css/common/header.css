@@ -37,7 +37,7 @@
 }
 
 button#theme-toggle {
-    font-size: 20px;
+    font-size: 1.25rem;
     margin: auto 4px;
 }
 
@@ -74,7 +74,7 @@ body:not(.dark) #sun {
     #menu {
         flex-wrap: wrap;
         column-gap: var(--gap);
-        line-height: 36px;
+        line-height: 2.25;
     }
 
     #menu li + li {
@@ -96,7 +96,7 @@ body:not(.dark) #sun {
 
 .lang-switch a {
     margin: auto 3px;
-    font-size: 16px;
+    font-size: 1rem;
     font-weight: 500;
 }
 

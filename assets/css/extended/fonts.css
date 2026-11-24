@@ -1,0 +1,30 @@
+/* EB Garamond (SIL Open Font License, static/fonts/eb-garamond/OFL.txt), self-hosted and
+   subset to Latin. Its small x-height and tall capitals suit the handwriting better than the
+   system fonts did. */
+@font-face {
+    font-family: "EB Garamond";
+    src: url("/fonts/eb-garamond/EBGaramond.woff2") format("woff2");
+    font-weight: 400 800;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "EB Garamond";
+    src: url("/fonts/eb-garamond/EBGaramond-Italic.woff2") format("woff2");
+    font-weight: 400 800;
+    font-style: italic;
+    font-display: swap;
+}
+
+/* Font sizes are in rem. The theme's sizes were chosen for system fonts with an x-height of
+   about 0.52 em; EB Garamond's is 0.405 em, so the root is 0.52 / 0.405 = 128% of the reader's
+   default size to keep text the same x-height. */
+html {
+    font-size: 128%;
+}
+
+body {
+    font-family: "EB Garamond", Garamond, Georgia, serif;
+    font-size: 1.125rem;
+}

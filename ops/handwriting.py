@@ -1,9 +1,15 @@
 #!/usr/bin/env python3
-"""Annotate rendered Hugo pages, make worksheets, and simulate an ink import."""
+# /// script
+# dependencies = ["reportlab", "pymupdf"]
+# ///
+# `uv run ops/handwriting.py ...` brings the worksheet and import dependencies.
+# `prepare` needs only the standard library, so deployment runs it with python3.
+"""Build and annotate the Hugo site, make worksheets, and import ink."""
 
 import argparse
 from collections import Counter
 from dataclasses import dataclass, field
+from datetime import date
 from hashlib import sha256
 from html import unescape
 from html.parser import HTMLParser
@@ -11,7 +17,11 @@ import json
 from math import isfinite
 from pathlib import Path
 import re
+import subprocess
 
+SITE = Path(__file__).resolve().parent.parent
+WORKSPACE = SITE / "handwriting-worksheets"  # gitignored
+PREVIEW_URL = "http://127.0.0.1:8321/"
 MANIFEST = Path("handwriting/ink.json")
 RM2_PAGE_SIZE = (1404 * 72 / 226, 1872 * 72 / 226)
 HEADINGS = {"h1", "h2", "h3", "h4", "h5", "h6"}
@@ -217,7 +227,25 @@ def read_json(path):
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def prepare(public, catalog):
+def build(public, base_url):
+    """Build the site with Hugo into public, replacing an earlier build there."""
+    if public.exists() and any(public.iterdir()) and not (public / "index.html").is_file():
+        raise ValueError(f"{public} is not empty and holds no earlier build, so it will not be cleaned")
+    command = ["hugo", "build", "--cleanDestinationDir", "-d", str(public)]
+    if base_url:
+        command += ["--baseURL", base_url]
+    if subprocess.run(command, cwd=SITE, check=False).returncode != 0:
+        raise ValueError("Hugo build failed")
+
+
+def prepare(public, catalog, base_url):
+    local = public is None
+    if local:
+        public = WORKSPACE / "site"
+        catalog = catalog or WORKSPACE / "catalog.json"
+        base_url = base_url or PREVIEW_URL
+    public = public.resolve()
+    build(public, base_url)
     paths = sorted(public.rglob("*.html"), key=lambda path: (path != public / "index.html", path))
     if not (public / "index.html").is_file():
         raise ValueError(f"No Hugo homepage found in {public}")
@@ -241,17 +269,40 @@ def prepare(public, catalog):
             entry["pending"] = current["demo"] or ink.get("fingerprint") != entry["fingerprint"]
         write_json(catalog, list(entries.values()))
     print(f"Prepared {len(paths)} HTML files and collected {len(entries)} writing prompts.")
+    if local:
+        print(f"Catalog: {catalog.relative_to(SITE)}\nPreview: python3 -m http.server 8321 "
+              f"--bind 127.0.0.1 --directory {public.relative_to(SITE)}")
 
 
-def worksheet(catalog, output, page, limit, letter_height_mm):
+def new_worksheet_path(page):
+    """handwriting-worksheets/blank/<date>-<page>.pdf, numbered rather than replacing one."""
+    slug = "all" if page is None else re.sub(r"[^\w]+", "-", page).strip("-") or "home"
+    stem = f"{date.today().isoformat()}-{slug}"
+    path, number = WORKSPACE / "blank" / f"{stem}.pdf", 2
+    while path.exists() or path.with_suffix(".json").exists():
+        path, number = WORKSPACE / "blank" / f"{stem}-{number}.pdf", number + 1
+    return path
+
+
+def worksheet(catalog, output, page, limit, letter_height_mm, x_height_mm, text_height_mm):
     # Only worksheet generation needs this dependency. Hugo deployment uses stdlib.
     from reportlab.lib.units import mm
     from reportlab.lib.utils import simpleSplit
     from reportlab.pdfbase.pdfmetrics import getAscentDescent, stringWidth
     from reportlab.pdfgen import canvas
 
-    if not isfinite(letter_height_mm) or letter_height_mm <= 0:
-        raise ValueError("Letter height must be a positive number of millimetres")
+    for value in (letter_height_mm, x_height_mm, text_height_mm):
+        if not isfinite(value) or value <= 0:
+            raise ValueError("Letter, x- and text heights must be positive numbers of millimetres")
+    if x_height_mm >= letter_height_mm:
+        raise ValueError("The x-height must be smaller than the capital height")
+    if catalog is None:
+        # A fresh build, so prompts written since the last import are left out.
+        prepare(None, None, None)
+        catalog = WORKSPACE / "catalog.json"
+    if output is None:
+        output = new_worksheet_path(page)
+    output.parent.mkdir(parents=True, exist_ok=True)
     entries = [entry for entry in read_json(catalog)
                if entry["pending"] and (page is None or page in entry["pages"])]
     if limit is not None:
@@ -264,16 +315,23 @@ def worksheet(catalog, output, page, limit, letter_height_mm):
     panel_width = width - 2 * margin
     font = "Helvetica"
     letter_height = letter_height_mm * mm
+    # The dashed guide marks the top of small letters such as n and m. The site scales each
+    # word so this height matches the x-height of its font.
+    x_height = x_height_mm * mm
     # Helvetica's ascent equals its cap height (718 units per em).
     ascent, descent = getAscentDescent(font, 1)
-    font_size = letter_height / ascent
-    descender_space = abs(descent) * font_size
+    # Handwritten descenders reach about an x-height below the baseline, often more.
+    descender_space = x_height
     panel_baseline = letter_height + 1.2 * mm
     panel_height = panel_baseline + descender_space + 0.8 * mm
     first_row_top = 20 * mm
     last_row_bottom = height - 10 * mm
-    prompt_baseline = 4 * mm + letter_height
-    panel_offset = prompt_baseline + descender_space + 1.5 * mm
+    # The typed prompt is smaller than the guides, since handwriting at a given capital height
+    # is narrower than Helvetica. Its line length sets how many words go in each box.
+    text_height = text_height_mm * mm
+    font_size = text_height / ascent
+    prompt_baseline = 4 * mm + text_height
+    panel_offset = prompt_baseline + abs(descent) * font_size + 1.5 * mm
     row_height = panel_offset + panel_height + 3 * mm
     if first_row_top + row_height > last_row_bottom:
         raise ValueError("The letter height is too large for the reMarkable 2 worksheet")
@@ -282,9 +340,8 @@ def worksheet(catalog, output, page, limit, letter_height_mm):
     for entry in entries:
         longest_word = max(stringWidth(word, font, font_size) for word in entry["text"].split())
         if longest_word > panel_width - 4 * mm:
-            raise ValueError(f'Use a smaller --letter-height-mm for prompt {entry["id"]}; '
+            raise ValueError(f'Use a smaller --text-height-mm for prompt {entry["id"]}; '
                              "one word is wider than the writing box")
-        # Leave some extra width for the same words in handwriting.
         lines = simpleSplit(entry["text"], font, font_size, max(panel_width * 0.9, longest_word))
         rows.append((entry, lines))
 
@@ -305,7 +362,8 @@ def worksheet(catalog, output, page, limit, letter_height_mm):
         pdf.drawString(margin, height - 8 * mm, "Website handwriting")
         pdf.setFont(font, 8)
         pdf.drawString(margin, height - 13 * mm,
-                       f"Copy one line per box. The lower rule is the baseline. Capitals: {letter_height_mm:g} mm.")
+                       f"Copy one line per box on the lower rule. Small letters reach the dashed line "
+                       f"({x_height_mm:g} mm), capitals the top rule ({letter_height_mm:g} mm).")
         pdf.drawRightString(width - margin, 5 * mm, f"Page {page_number}")
         return first_row_top
 
@@ -332,11 +390,15 @@ def worksheet(catalog, output, page, limit, letter_height_mm):
             for guide in (panel_baseline - letter_height, panel_baseline):
                 y = height - panel_top - guide
                 pdf.line(margin, y, width - margin, y)
+            pdf.setDash(2, 2)
+            y = height - panel_top - panel_baseline + x_height
+            pdf.line(margin, y, width - margin, y)
+            pdf.setDash()
             slots.append({
                 "id": entry["id"], "fingerprint": entry["fingerprint"], "text": line,
                 "word_start": word_start, "page": page_number,
                 "box": [margin, panel_top, panel_width, panel_height],
-                "baseline": panel_baseline, "letter_height": letter_height,
+                "baseline": panel_baseline, "letter_height": letter_height, "x_height": x_height,
             })
             word_start += len(line.split())
             top += row_height
@@ -403,15 +465,20 @@ def import_pdf(blank, filled, output, worksheet_map):
     except ModuleNotFoundError as error:
         if error.name != "pymupdf":
             raise
-        raise ValueError("PDF import requires PyMuPDF (uv run --with pymupdf python ...)") from error
+        raise ValueError("PDF import requires PyMuPDF (uv run ops/handwriting.py ...)") from error
 
+    filled = filled or WORKSPACE / "filled" / blank.name
+    output = output or SITE / "static" / MANIFEST
     slots = read_json(worksheet_map or blank.with_suffix(".json"))
     prompts = {}
-    for slot, words, problem in read_worksheet_ink(blank, filled, slots):
+    warnings = []
+    for slot, words, problem in read_worksheet_ink(blank, filled, slots, warnings):
         prompts.setdefault(slot["id"], []).append((slot, words))
         if problem:
             print(f'Page {slot["page"]}, prompt {slot["id"]}, '
                   f'word {slot.get("word_start", 0) + 1}: {problem}.')
+    for warning in warnings:
+        print(warning)
 
     entries = {}
     assets = {}
@@ -461,6 +528,12 @@ def import_pdf(blank, filled, output, worksheet_map):
                 current["entries"].update(entries)
                 write_json(staging / "manifest.json", current)
                 (staging / "manifest.json").replace(output)
+                # Words replaced by this import are no longer referenced.
+                used = {Path(word["src"]).name for entry in current["entries"].values()
+                        for word in entry["words"]}
+                for svg in words_dir.glob("*.svg"):
+                    if svg.name not in used:
+                        svg.unlink()
             finally:
                 os.close(directory)
 
@@ -471,16 +544,29 @@ def import_pdf(blank, filled, output, worksheet_map):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     commands = parser.add_subparsers(dest="command", required=True)
-    command = commands.add_parser("prepare", help="Annotate a Hugo output directory")
-    command.add_argument("public", type=Path)
+    command = commands.add_parser(
+        "prepare", help="Build the site with Hugo and annotate it",
+        description="Without PUBLIC, build a local preview into handwriting-worksheets/site for "
+                    f"{PREVIEW_URL} and write handwriting-worksheets/catalog.json.")
+    command.add_argument("public", type=Path, nargs="?", help="Output directory (replaced)")
     command.add_argument("--catalog", type=Path)
-    command = commands.add_parser("worksheet", help="Create a PDF and a JSON coordinate map")
-    command.add_argument("catalog", type=Path)
-    command.add_argument("output", type=Path)
+    command.add_argument("--base-url", help="Passed to hugo --baseURL")
+    command = commands.add_parser(
+        "worksheet", help="Create a worksheet PDF and its JSON coordinate map",
+        description="Without --catalog, run prepare first. Without OUTPUT, write "
+                    "handwriting-worksheets/blank/<date>-<page>.pdf.")
+    command.add_argument("output", type=Path, nargs="?")
+    command.add_argument("--catalog", type=Path, help="Use this catalog instead of running prepare")
     command.add_argument("--page", help="Select prompts appearing on this route, e.g. /")
     command.add_argument("--limit", type=int)
-    command.add_argument("--letter-height-mm", type=float, default=10,
-                         help="Capital letter height in millimetres (default: 10)")
+    command.add_argument("--letter-height-mm", type=float, default=7,
+                         help="Capital height, the top writing guide, in millimetres (default: 7)")
+    command.add_argument("--x-height-mm", type=float, default=4,
+                         help="Height of small letters such as n and m, the dashed guide, in millimetres "
+                              "(default: 4, where they reached on the first worksheets)")
+    command.add_argument("--text-height-mm", type=float, default=7,
+                         help="Capital height of the typed prompt in millimetres (default: 7). "
+                              "Smaller puts more words in each box.")
     command = commands.add_parser("mock-export", help="Simulate word boxes from the worksheet")
     command.add_argument("worksheet_map", type=Path)
     command.add_argument("output", type=Path)
@@ -490,8 +576,10 @@ def main():
     command.add_argument("output", type=Path)
     command = commands.add_parser("import-pdf", help="Extract word SVGs from a vector worksheet export")
     command.add_argument("blank", type=Path, help="Original blank worksheet PDF")
-    command.add_argument("filled", type=Path, help="Completed worksheet PDF export")
-    command.add_argument("output", type=Path, help="Destination ink.json manifest")
+    command.add_argument("filled", type=Path, nargs="?",
+                         help="Completed worksheet PDF export (default: same name in handwriting-worksheets/filled/)")
+    command.add_argument("output", type=Path, nargs="?",
+                         help="Destination ink.json manifest (default: static/handwriting/ink.json)")
     command.add_argument("--worksheet-map", type=Path, help="Defaults to the JSON beside the blank PDF")
     args = vars(parser.parse_args())
     action = args.pop("command")

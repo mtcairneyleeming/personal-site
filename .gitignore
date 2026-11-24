@@ -5,3 +5,7 @@ resources/
 
 # Server command log: contains server details.
 ops/ssh-log.md
+
+# Local handwriting worksheets (rm-sync uploads blank/, downloads filled/).
+handwriting-worksheets/
+__pycache__/
